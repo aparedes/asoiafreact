@@ -30,7 +30,7 @@ function *getAllHouses() {
     }
     // }
   } catch(e) {
-    console.error('GET ALL HOUSES', e, e.message, e.stack);
+    console.error('GET ALL HOUSES', e, e.message, e.stack)
     yield put({ type: 'GET_ALL_HOUSES_ERROR' })
   }
 }
