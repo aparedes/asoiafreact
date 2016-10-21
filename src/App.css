@@ -22,3 +22,20 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.house {
+  background-color: lightgray;
+  border: 1px solid darkgray;
+  color: black;
+  padding: 10px;
+}
+
+.house .houseName {
+  padding: 5px;
+  font-weight: bold;
+}
+
+.house .houseDetails {
+  padding: 5px;
+  text-align: left;
+}
