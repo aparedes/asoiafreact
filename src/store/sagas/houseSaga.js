@@ -7,7 +7,7 @@ type AllHousesType = {
   data: {
     allHouses: {
       totalCount: number,
-      houses: Array<{ id: string, name: string }>,
+      houses: Array<{ id: string, name: string, region: string }>,
     }
   }
 }
@@ -33,21 +33,22 @@ function fetchData(url: string, options?: Object) {
 
 function *getAllHouses(): Generator<*, *, *> {
   try {
-    const houses: ?AllHousesType = yield call(fetchData, 'https://aqueous-citadel-58469.herokuapp.com/?query={allHouses{totalCount houses{id name}}}')
+    const houses: ?AllHousesType = yield call(fetchData, 'https://aqueous-citadel-58469.herokuapp.com/?query={allHouses{totalCount houses{id name region}}}')
     if (houses) {
       let allHouses = new Immutable.Map()
-      houses.data.allHouses.houses.forEach(house => allHouses = allHouses.setIn( [ house.id, 'name' ], house.name ) )
-      yield put({ type: 'GOT_ALL_HOUSES', allHouses })
+      houses.data.allHouses.houses.forEach(house => allHouses = allHouses.set(house.id, new Immutable.Map(house)))
+      const allHousesIds = allHouses.sortBy(house => house.getIn([ 'name' ], '')).keySeq().toList()
+      yield put({ type: 'GOT_ALL_HOUSES', allHouses, allHousesIds })
     } else {
       yield put({ type: 'NO HOUSES' })
     }
   } catch(e) {
     console.error('GET ALL HOUSES', e, e.message, e.stack)
-    yield put({ type: 'GET_ALL_HOUSES_ERROR' })
+    yield put({ type: 'GET_ALL_HOUSES_ERROR', error: e.message })
   }
 }
 
-function *getHouse({ houseId }): Generator<*, *, *> {
+function *getHouse({ houseId }: { houseId: string }): Generator<*, *, *> {
   try {
     const houseResponse: ?HouseType = yield call(fetchData, `https://aqueous-citadel-58469.herokuapp.com/?query={house(id:"${houseId}"){name currentLord{name} region coatOfArms words}}`)
     if (houseResponse) {
@@ -61,7 +62,7 @@ function *getHouse({ houseId }): Generator<*, *, *> {
       console.log(JSON.stringify(house, null, '\t'))
     }
   } catch(e) {
-    yield put({ type: 'GET_HOUSE_ERROR', houseId })
+    yield put({ type: 'GET_HOUSE_ERROR', houseId, error: e.message })
   }
 }
 export default function *(): Generator<*, *, *> {
