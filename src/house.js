@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 
 type PropsType = {
   coatOfArms: string,
+  error: ?string,
   getHouse: () => void,
   getting: boolean,
   got: boolean,
@@ -52,10 +53,11 @@ class House extends Component {
     )
   }
   render() {
+    const { error, getting } = this.props
     return (
       <div className={ 'house' } onClick={ this.changeState }>
         <div className={ 'houseName' }>{ this.props.name }</div>
-        { this.state.showFull ? this.props.getting ? 'Loading' : this.renderDetails() : null }
+        { this.state.showFull ? getting ? 'Loading' : error ? error : this.renderDetails() : null }
       </div>
     )
   }
@@ -65,6 +67,7 @@ const mapStateToProps = (state: { houses: Map<string, Map<string, *>> }, { house
   const house = state.houses.getIn([ 'houses', houseId ], new Immutable.Map())
   return ({
     coatOfArms: house.getIn([ 'coatOfArms' ], ''),
+    error: house.getIn([ 'error' ], null),
     getting: house.getIn([ 'getting' ], false),
     got: house.has('coatOfArms'),
     name: house.getIn([ 'name' ], ''),

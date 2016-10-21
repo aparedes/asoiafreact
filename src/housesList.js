@@ -3,20 +3,21 @@ import * as Immutable from 'immutable'
 import React, { Component } from 'react'
 import House from './house'
 import type { Element } from 'react'
-import type { Map } from 'immutable'
+import type { List, Map } from 'immutable'
 import { connect } from 'react-redux'
 
 type PropsType = {
-  allHouses: Map<string, string>,
+  allHouses: List<string>,
+  error: ?string,
   getting: boolean,
 }
 class HousesList extends Component {
   props: PropsType
   render(): Element<*> {
-    const { allHouses, getting } = this.props
+    const { allHouses, error, getting } = this.props
     return (
       <div>
-        { getting ? 'Loading' : null }
+        { getting ? 'Loading' : error }
         { allHouses.map((house) => <House key={ house } houseId={ house } /> ) }
       </div>
     )
@@ -24,12 +25,9 @@ class HousesList extends Component {
 }
 
 const mapStateToProps = (state: { houses: Map<string, *> }) => ({
-  allHouses: state.houses.getIn([ 'houses' ], new Immutable.Map()).sortBy(house => house.getIn([ 'name' ], '')).keySeq(),
+  allHouses: state.houses.getIn([ 'housesIds' ], new Immutable.List()),
+  error: state.houses.getIn([ 'error_all' ], null),
   getting: state.houses.getIn([ 'getting_all' ], false),
 })
-function mapDispatchToProps(dispatch: (action: Object | Function) => void): Object {
-  return ({
-
-  })
-}
+const mapDispatchToProps = (dispatch: (action: Object) => void): Object => ({ })
 export default connect(mapStateToProps, mapDispatchToProps)(HousesList)

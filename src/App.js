@@ -7,7 +7,6 @@ import HousesList from './housesList'
 
 type PropsType = {
   getAllHouses: () => void,
-  houses: Map<string, *>,
 }
 class App extends Component {
 
@@ -16,7 +15,6 @@ class App extends Component {
   }
   props: PropsType
   render() {
-    console.log(this.props.houses)
     return (
       <div className="App">
         <HousesList />
