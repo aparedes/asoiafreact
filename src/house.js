@@ -1,4 +1,5 @@
 /* @flow */
+import './house.css'
 import * as Immutable from 'immutable'
 import React, { Component } from 'react'
 import type { Map } from 'immutable'
