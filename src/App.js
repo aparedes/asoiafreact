@@ -1,22 +1,23 @@
 /* @flow */
 import './App.css'
 import React, { Component } from 'react'
+import HousesList from './housesList'
 import type { Map } from 'immutable'
 import { connect } from 'react-redux'
-import HousesList from './housesList'
 
 type PropsType = {
   getAllHouses: () => void,
 }
-class App extends Component {
 
+class App extends Component {
+  static displayName = 'App'
   componentDidMount() {
     this.props.getAllHouses()
   }
   props: PropsType
   render() {
     return (
-      <div className="App">
+      <div className={ 'App' }>
         <HousesList />
       </div>
     )

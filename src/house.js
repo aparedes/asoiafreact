@@ -14,30 +14,36 @@ type PropsType = {
   name: string,
   words: string,
 }
+
 type StateType = {
   showFull: boolean
 }
+
 class House extends Component {
-  changeState: () => void
-  props: PropsType
-  state: StateType
+  static displayName = 'House'
+
   constructor(props: PropsType) {
     super(props)
     this.changeState = this.changeState.bind(this)
   }
+  state: StateType
   componentWillMount() {
     this.state = {
-      showFull: false
+      showFull: false,
     }
   }
+
   componentDidUpdate(prevProps: PropsType, prevState: StateType) {
     if (!prevState.showFull && this.state.showFull && !this.props.got && !this.props.getting) {
       this.props.getHouse()
     }
   }
+  changeState: () => void
+  props: PropsType
+
   changeState() {
     this.setState({
-      showFull: !this.state.showFull
+      showFull: !this.state.showFull,
     })
   }
   renderDetails() {
@@ -45,10 +51,10 @@ class House extends Component {
     return (
       <div className={ 'houseDetails'  }>
         <div className={ 'houseDetail' }>
-          <b>{ 'Coat of Arms: '}</b>{` ${ coatOfArms.length > 0 ? coatOfArms : '?' }`}
+          <b>{ 'Coat of Arms: '}</b>{ coatOfArms.length > 0 ? coatOfArms : '?'}
         </div>
         <div className={ 'houseDetail' }>
-          <b>{ 'Words: '}</b>{` ${ words.length > 0 ? words : '?' }`}
+          <b>{ 'Words: '}</b>{ words.length > 0 ? words : '?' }
         </div>
       </div>
     )
@@ -76,6 +82,6 @@ const mapStateToProps = (state: { houses: Map<string, Map<string, *>> }, { house
   })
 }
 const mapDispatchToProps = (dispatch: (action: Object) => void, { houseId }: { houseId: string }): Object => ({
-  getHouse: () => dispatch({ type: 'GET_HOUSE', houseId })
+  getHouse: () => dispatch({ type: 'GET_HOUSE', houseId }),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(House)

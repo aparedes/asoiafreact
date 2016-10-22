@@ -11,7 +11,7 @@ type ActionType = {
   house: Map<string, *>,
   error: string,
 }
-export default function(state: Map<string, *> = new Immutable.Map(), action: ActionType) {
+export default function (state: Map<string, *> = new Immutable.Map(), action: ActionType) {
   switch (action.type) {
     // ALL HOUSES
     case 'GET_ALL_HOUSES':
@@ -35,7 +35,6 @@ export default function(state: Map<string, *> = new Immutable.Map(), action: Act
                   .removeIn([ 'houses', action.houseId, 'getting' ])
                   .removeIn([ 'houses', action.houseId, 'error' ])
     default:
-
   }
   return state
 }

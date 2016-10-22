@@ -33,7 +33,7 @@ function fetchData(url: string, options?: Object) {
 
 function *getAllHouses(): Generator<*, *, *> {
   try {
-    const houses: ?AllHousesType = yield call(fetchData, 'https://aqueous-citadel-58469.herokuapp.com/?query={allHouses{totalCount houses{id name region}}}')
+    const houses: ?AllHousesType = yield call(fetchData, 'https://iceandfire-graphql-hbwxqxtabz.now.sh/?query={allHouses{totalCount houses{id name region}}}')
     if (houses) {
       let allHouses = new Immutable.Map()
       houses.data.allHouses.houses.forEach(house => allHouses = allHouses.set(house.id, new Immutable.Map(house)))
@@ -50,7 +50,8 @@ function *getAllHouses(): Generator<*, *, *> {
 
 function *getHouse({ houseId }: { houseId: string }): Generator<*, *, *> {
   try {
-    const houseResponse: ?HouseType = yield call(fetchData, `https://aqueous-citadel-58469.herokuapp.com/?query={house(id:"${houseId}"){name currentLord{name} region coatOfArms words}}`)
+    const endpoint = `https://iceandfire-graphql-hbwxqxtabz.now.sh/?query={house(id:"${houseId}"){name currentLord{name} region coatOfArms words}}`
+    const houseResponse: ?HouseType = yield call(fetchData, endpoint)
     if (houseResponse) {
       const { data: { house } } = houseResponse
       let currentLord

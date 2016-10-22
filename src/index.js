@@ -1,10 +1,10 @@
 /* @flow */
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import './index.css'
+import App from './App'
 import { Provider } from 'react-redux'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import configureStore from './store/configureStore'
-import './index.css';
 
 ReactDOM.render(
   (
@@ -13,4 +13,4 @@ ReactDOM.render(
     </Provider>
   ),
   document.getElementById('root')
-);
+)
