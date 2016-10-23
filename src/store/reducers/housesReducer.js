@@ -1,7 +1,7 @@
 /* @flow */
 
 import * as Immutable from 'immutable'
-import type { List, Map } from 'immutable'
+import type { List, Map, Set } from 'immutable'
 
 type ActionType = {
   type: string,
@@ -10,6 +10,7 @@ type ActionType = {
   houseId: string,
   house: Map<string, *>,
   error: string,
+  regions: Set<string>,
 }
 export default function (state: Map<string, *> = new Immutable.Map(), action: ActionType) {
   switch (action.type) {
@@ -23,7 +24,7 @@ export default function (state: Map<string, *> = new Immutable.Map(), action: Ac
       return state.remove('getting_all')
                   .set('houses', action.allHouses)
                   .set('housesIds', action.allHousesIds)
-
+                  .set('regions', action.regions)
     // SINGLE HOUSE
     case 'GET_HOUSE':
       return state.setIn([ 'houses', action.houseId, 'getting' ], true)

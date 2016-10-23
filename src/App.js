@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import HousesList from './housesList'
 import type { Map } from 'immutable'
 import SearchHouse from './searchHouse'
+import Regions from './regions'
 import { connect } from 'react-redux'
 
 type PropsType = {
@@ -21,6 +22,7 @@ class App extends Component {
       <div className={ 'App' }>
         <SearchHouse />
         <HousesList />
+        <Regions />
       </div>
     )
   }

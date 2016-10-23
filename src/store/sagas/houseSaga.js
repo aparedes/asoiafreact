@@ -36,9 +36,14 @@ function *getAllHouses(): Generator<*, *, *> {
     const houses: ?AllHousesType = yield call(fetchData, 'https://iceandfire-graphql-hbwxqxtabz.now.sh/?query={allHouses{totalCount houses{id name region}}}')
     if (houses) {
       let allHouses = new Immutable.Map()
-      houses.data.allHouses.houses.forEach(house => allHouses = allHouses.set(house.id, new Immutable.Map(house)))
+      let regions = new Immutable.Set()
+      houses.data.allHouses.houses.forEach(house => {
+        allHouses = allHouses.set(house.id, new Immutable.Map(house))
+        regions = regions.add(house.region)
+      })
+      regions = regions.sort()
       const allHousesIds = allHouses.sortBy(house => house.getIn([ 'name' ], '')).keySeq().toList()
-      yield put({ type: 'GOT_ALL_HOUSES', allHouses, allHousesIds })
+      yield put({ type: 'GOT_ALL_HOUSES', allHouses, allHousesIds, regions })
     } else {
       yield put({ type: 'NO HOUSES' })
     }

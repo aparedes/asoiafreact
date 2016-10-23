@@ -1,0 +1,11 @@
+.regions {
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 30px;
+}
+
+.regions .active {
+  color: red;
+}
