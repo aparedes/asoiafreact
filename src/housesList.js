@@ -26,12 +26,20 @@ class HousesList extends Component {
   }
 }
 
-const mapStateToProps = (state: { houses: Map<string, *> }) => ({
-  allHouses: state.houses.getIn([ 'housesIds' ], new Immutable.List()),
-  error: state.houses.getIn([ 'error_all' ], null),
-  getting: state.houses.getIn([ 'getting_all' ], false),
-})
-
+const mapStateToProps = (state: { app: {search: string}, houses: Map<string, *> }): Object => {
+  let allHouses
+  if (state.app.search && state.app.search.length > 0) {
+    const search = new RegExp(state.app.search.toLowerCase())
+    allHouses = state.houses.getIn([ 'houses' ], new Immutable.Map()).filter(house => search.test(house.get('name', '').toLowerCase())).sortBy(house => house.getIn([ 'name' ], '')).keySeq().toList()
+  } else {
+    allHouses = state.houses.getIn([ 'housesIds' ], new Immutable.List())
+  }
+  return ({
+    allHouses,
+    error: state.houses.getIn([ 'error_all' ], null),
+    getting: state.houses.getIn([ 'getting_all' ], false),
+  })
+}
 const mapDispatchToProps = (dispatch: (action: Object) => void): Object => ({ })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HousesList)

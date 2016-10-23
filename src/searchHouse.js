@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 type PropsType = {
-
+  setSearch: (search: string) => void,
 }
 class SearchHouse extends Component {
   static displayName = 'SearchHouse'
@@ -18,6 +18,7 @@ class SearchHouse extends Component {
   onChange(evt: KeyboardEvent) {
     const input: HTMLInputElement = evt.target
     console.log(input.value)
+    this.props.setSearch(input.value)
   }
   render() {
     return (
@@ -31,7 +32,7 @@ const mapStateToProps = (state: Object): Object => ({
 })
 
 const mapDispatchToProps = (dispatch: (action: Object) => void): Object => ({
-
+  setSearch: (search: string) => dispatch({ type: 'SET_SEARCH', search }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchHouse)
