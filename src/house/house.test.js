@@ -12,13 +12,12 @@ import renderer from 'react-test-renderer'
 
 test('Displays a house', () => {
   const component = renderer.create(
-    <House houseId={ '1' } getting={ false } name={ 'House Stark of Winterfell' } words={ 'Winter is Comming' } coatOfArms={ 'Dire wolf' } getHouse={ () => {}} />
+    <House houseId={ '1' } name={ 'House Stark of Winterfell' } words={ 'Winter is Comming' } coatOfArms={ 'Dire wolf' } getHouse={ () => {}} />
   );
-  let housesList = component.toJSON()
-  expect(housesList).toMatchSnapshot()
+  let house = component.toJSON()
+  expect(house).toMatchSnapshot()
 
-  // Open house
-  housesList.props.onClick()
-  housesList = component.toJSON()
-  expect(housesList).toMatchSnapshot()
+  house.props.onClick()
+  house = component.toJSON()
+  expect(house).toMatchSnapshot()
 })

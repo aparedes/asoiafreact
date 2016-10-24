@@ -1,4 +1,13 @@
 exports[`test Prints a list of houses 1`] = `
 <div
-  className="houseList" />
+  className="houseList">
+  <div
+    className="house"
+    onClick={[Function]}>
+    <div
+      className="houseName">
+      House Stark of Winterfell
+    </div>
+  </div>
+</div>
 `;
