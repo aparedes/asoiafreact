@@ -30,10 +30,10 @@ function fetchData(url: string, options?: Object) {
     fetch(url, options).then(r => resolve(r.json())).catch(reject)
   })
 }
-
+const EndPoint = process.env.NODE_ENV === 'production' ? 'https://iceandfire-graphql-hbwxqxtabz.now.sh/' : 'http://localhost:5000/'
 function *getAllHouses(): Generator<*, *, *> {
   try {
-    const houses: ?AllHousesType = yield call(fetchData, 'https://iceandfire-graphql-hbwxqxtabz.now.sh/?query={allHouses{totalCount houses{id name region}}}')
+    const houses: ?AllHousesType = yield call(fetchData, `${ EndPoint }?query={allHouses{totalCount houses{id name region}}}`)
     if (houses) {
       let allHouses = new Immutable.Map()
       let regions = new Immutable.Set()
@@ -55,8 +55,8 @@ function *getAllHouses(): Generator<*, *, *> {
 
 function *getHouse({ houseId }: { houseId: string }): Generator<*, *, *> {
   try {
-    const endpoint = `https://iceandfire-graphql-hbwxqxtabz.now.sh/?query={house(id:"${houseId}"){name currentLord{name} region coatOfArms words}}`
-    const houseResponse: ?HouseType = yield call(fetchData, endpoint)
+    const url = `${ EndPoint }?query={house(id:"${ houseId }"){name currentLord{name} region coatOfArms words}}`
+    const houseResponse: ?HouseType = yield call(fetchData, url)
     if (houseResponse) {
       const { data: { house } } = houseResponse
       let currentLord

@@ -11,9 +11,9 @@ type PropsType = {
   setRegion: (region: string) => void,
 }
 
-class Regions extends Component {
+export class Regions extends Component {
   props: PropsType
-  onClick(region) {
+  onClick(region: string) {
     this.props.setRegion(region)
   }
   render() {
@@ -30,7 +30,7 @@ class Regions extends Component {
   }
 }
 
-const mapStateToProps = (state: { houses: Map<string, *> }) => ({
+const mapStateToProps = (state: { app: { region: string }, houses: Map<string, *> }) => ({
   selectedRegion: state.app.region,
   regions: state.houses.getIn([ 'regions' ], new Immutable.Set()),
 })

@@ -1,0 +1,25 @@
+exports[`test Displays the regions 1`] = `
+<div
+  className="regions">
+  <div
+    className="active"
+    onClick={[Function]}>
+    All
+  </div>
+  <div
+    className=""
+    onClick={[Function]}>
+    The North
+  </div>
+  <div
+    className=""
+    onClick={[Function]}>
+    Dorne
+  </div>
+  <div
+    className=""
+    onClick={[Function]}>
+    North of The Wall
+  </div>
+</div>
+`;

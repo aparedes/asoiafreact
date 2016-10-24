@@ -1,17 +1,17 @@
 /* @flow */
 import './App.css'
 import React, { Component } from 'react'
-import HousesList from './housesList'
+import HousesList from './housesList/housesList'
 import type { Map } from 'immutable'
-import SearchHouse from './searchHouse'
-import Regions from './regions'
+import SearchHouse from './searchHouse/searchHouse'
+import Regions from './regions/regions'
 import { connect } from 'react-redux'
 
 type PropsType = {
   getAllHouses: () => void,
 }
 
-class App extends Component {
+export class App extends Component {
   static displayName = 'App'
   componentDidMount() {
     this.props.getAllHouses()

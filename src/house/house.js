@@ -19,7 +19,7 @@ type StateType = {
   showFull: boolean
 }
 
-class House extends Component {
+export class House extends Component {
   static displayName = 'House'
 
   constructor(props: PropsType) {

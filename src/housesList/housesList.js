@@ -4,7 +4,7 @@ import * as Immutable from 'immutable'
 import type { List, Map } from 'immutable'
 import React, { Component } from 'react'
 import type { Element } from 'react'
-import House from './house'
+import House from '../house/house'
 import { connect } from 'react-redux'
 
 type PropsType = {
@@ -13,7 +13,7 @@ type PropsType = {
   getting: boolean,
 }
 
-class HousesList extends Component {
+export class HousesList extends Component {
   static displayName = 'HousesList'
   props: PropsType
   render(): Element<*> {

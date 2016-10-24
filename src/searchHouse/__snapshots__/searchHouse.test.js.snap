@@ -1,0 +1,5 @@
+exports[`test Prints a list of houses 1`] = `
+<input
+  onChange={[Function]}
+  placeholder="Search house" />
+`;

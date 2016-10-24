@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 type PropsType = {
   setSearch: (search: string) => void,
 }
-class SearchHouse extends Component {
+
+export class SearchHouse extends Component {
   static displayName = 'SearchHouse'
 
   constructor(props: PropsType) {

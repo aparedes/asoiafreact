@@ -1,0 +1,38 @@
+exports[`test Displays a house 1`] = `
+<div
+  className="house"
+  onClick={[Function]}>
+  <div
+    className="houseName">
+    House Stark of Winterfell
+  </div>
+</div>
+`;
+
+exports[`test Displays a house 2`] = `
+<div
+  className="house"
+  onClick={[Function]}>
+  <div
+    className="houseName">
+    House Stark of Winterfell
+  </div>
+  <div
+    className="houseDetails">
+    <div
+      className="houseDetail">
+      <b>
+        Coat of Arms: 
+      </b>
+      Dire wolf
+    </div>
+    <div
+      className="houseDetail">
+      <b>
+        Words: 
+      </b>
+      Winter is Comming
+    </div>
+  </div>
+</div>
+`;
