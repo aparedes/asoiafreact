@@ -6,13 +6,15 @@ type ActionType = {
 }
 
 export default function (state: Object = { }, action: ActionType) {
-  switch (action.type) {
-    case 'SET_SEARCH':
-      return { search:  action.search }
-    case 'SET_REGION':
-      return { region: action.region }
-    default:
+  if (action) {
+    switch (action.type) {
+      case 'SET_SEARCH':
+        return { search:  action.search }
+      case 'SET_REGION':
+        return { region: action.region }
+      default:
 
+    }
   }
   return state
 }
