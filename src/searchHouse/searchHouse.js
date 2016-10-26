@@ -1,4 +1,5 @@
 /* @flow */
+import './searchHouse.css'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
@@ -23,7 +24,7 @@ export class SearchHouse extends Component {
   }
   render() {
     return (
-      <input onChange={ this.onChange } placeholder={ 'Search house' }/>
+      <input className={ 'search' } onChange={ this.onChange } placeholder={ 'Search house' }/>
     )
   }
 }
