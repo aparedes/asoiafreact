@@ -1,0 +1,27 @@
+.house {
+  background-color: lightgray;
+  border: 1px solid darkgray;
+  color: black;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.houseName {
+  padding: 5px;
+  font-weight: bold;
+}
+
+.houseDetails {
+  padding: 5px;
+  text-align: left;
+}
+
+.houseOpen {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}

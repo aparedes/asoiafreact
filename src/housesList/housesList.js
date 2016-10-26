@@ -4,7 +4,7 @@ import * as Immutable from 'immutable'
 import type { List, Map } from 'immutable'
 import React, { Component } from 'react'
 import type { Element } from 'react'
-import House from '../house/house'
+import HouseItem from './houseItem/houseItem'
 import { connect } from 'react-redux'
 
 type PropsType = {
@@ -21,7 +21,7 @@ export class HousesList extends Component {
     return (
       <div className={ 'houseList' }>
         { getting ? 'Loading' : error }
-        { allHouses.map((house) => <House key={ house } houseId={ house } /> ) }
+        { allHouses.map((house) => <HouseItem key={ house } houseId={ house } /> ) }
       </div>
     )
   }
