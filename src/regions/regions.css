@@ -1,9 +1,17 @@
 .regions {
+  border: 1px solid black;
   align-items: center;
-  justify-content: space-around;
   display: flex;
   flex-direction: row;
-  flex: 0 0 30px;
+  flex: 0 0 60px;
+  min-width: 100%;
+  overflow: auto;
+}
+
+.regionItem {
+  flex: 0 0 150px;
+  display: inline-block;
+  align-self: center;
 }
 
 .regions .active {

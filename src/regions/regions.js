@@ -21,7 +21,7 @@ export class Regions extends Component {
     return (
       <div className={ 'regions' }>
         { regions.map(region => (
-          <div className={ selectedRegion === region ? 'active' : '' } key={ region } onClick={ this.onClick.bind(this, region) }>
+          <div className={ selectedRegion === region ? 'regionItem active' : 'regionItem' } key={ region } onClick={ this.onClick.bind(this, region) }>
             { region.length === 0 ? 'All' : region }
           </div>
         ))}
