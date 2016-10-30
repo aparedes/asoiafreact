@@ -9,19 +9,20 @@ type PropsType = {
 
 export class SearchHouse extends Component {
   static displayName = 'SearchHouse'
+  props: PropsType
+  onChange: (evt: KeyboardEvent) => void
 
   constructor(props: PropsType) {
     super(props)
     this.onChange = this.onChange.bind(this)
   }
-  props: PropsType
-  onChange: (evt: KeyboardEvent) => void
 
   onChange(evt: KeyboardEvent) {
     const input: HTMLInputElement = evt.target
     console.log(input.value)
     this.props.setSearch(input.value)
   }
+
   render() {
     return (
       <input className={ 'search' } onChange={ this.onChange } placeholder={ 'Search house' }/>

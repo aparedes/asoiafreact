@@ -33,6 +33,13 @@ exports[`test Displays a house 2`] = `
       </b>
       Winter is Comming
     </div>
+    <div
+      className="houseOpen"
+      onClick={[Function]}>
+      <i
+        aria-hidden="true"
+        className="fa fa-external-link" />
+    </div>
   </div>
 </div>
 `;

@@ -100,6 +100,7 @@ const mapStateToProps = (state: { houses: Map<string, Map<string, *>> }, { house
     words: house.getIn([ 'words' ], ''),
   })
 }
+
 const mapDispatchToProps = (dispatch: (action: Object) => void, { houseId }: { houseId: string }): Object => ({
   getHouse: () => dispatch({ type: 'GET_HOUSE', houseId }),
   openHouse: () => dispatch({ type: 'OPEN_HOUSE', houseId })

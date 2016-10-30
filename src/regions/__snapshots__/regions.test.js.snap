@@ -1,23 +1,23 @@
-exports[`test Displays the regions 1`] = `
+exports[`Displays the regions Region snapshot 1`] = `
 <div
   className="regions">
   <div
-    className="active"
+    className="regionItem active"
     onClick={[Function]}>
     All
   </div>
   <div
-    className=""
+    className="regionItem"
     onClick={[Function]}>
     The North
   </div>
   <div
-    className=""
+    className="regionItem"
     onClick={[Function]}>
     Dorne
   </div>
   <div
-    className=""
+    className="regionItem"
     onClick={[Function]}>
     North of The Wall
   </div>
