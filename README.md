@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/aparedes/asoiafreact.svg?branch=master)](https://travis-ci.org/aparedes/asoiafreact)
+
 ## A Song of Ice And Fire App
 Small project using React, Redux and ASOIAF
 
