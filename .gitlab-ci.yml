@@ -1,4 +1,4 @@
-image: alpine-node:latest
+image: mhart/alpine-node:latest
 cache:
   paths:
   - node_modules/
