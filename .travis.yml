@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-  "6"
+  - "6"
 
 install:
-  npm install -g yarn
-  yarn install
+  - npm install -g yarn
+  - yarn install
 
 script:
-  yarn test
+  - yarn test
