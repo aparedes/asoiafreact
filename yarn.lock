@@ -4868,13 +4868,13 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "~0.1.0"
 
-redux-logger@^2.7.0:
+redux-logger@^2.7.4:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-2.7.4.tgz#891e5d29e7f111d08b5781a237b9965b5858c7f8"
   dependencies:
     deep-diff "0.3.4"
 
-redux-saga@^0.12.0:
+redux-saga@^0.12.1:
   version "0.12.1"
   resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.12.1.tgz#79c9263d67486fd26a7a3d3b9df8ed65057a9fc6"
 

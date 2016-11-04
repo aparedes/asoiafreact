@@ -1,4 +1,4 @@
-image: mhart/alpine-node:latest
+image: aparedes/alpine-node-yarn:node-6
 cache:
   paths:
   - node_modules/
