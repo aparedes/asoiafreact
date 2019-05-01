@@ -1,9 +1,20 @@
-image: aparedes/alpine-node-yarn:node-6
+image: node:latest
+
+# And to cache them as well.
 cache:
   paths:
-  - node_modules/
+    - node_modules/
+    - .yarn
+
+# We tell GitLab to install all the packages
+# before running anything.
+# Docker images come with yarn preinstalled
+before_script:  
+  - apt-get update -qq && apt-get install
+  - yarn config set cache-folder .yarn
+  - yarn install 
 
 test_async:
   script:
-   - yarn
-   - yarn test
+    - npm install
+    - npm test
