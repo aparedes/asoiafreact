@@ -1,27 +1,26 @@
 /* @flow */
-import {  applyMiddleware, createStore  } from 'redux'
-import createLogger from 'redux-logger'
-import createSagaMiddleware from 'redux-saga'
-import rootReducer from './rootReducer'
-import rootSaga from './sagas/rootSaga'
+import { applyMiddleware, compose, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
+import rootReducer from './rootReducer';
+import rootSaga from './sagas/rootSaga';
 
-let createStoreWithMiddleware: (root: Object, state: Object) => Object
-const sagaMiddleware = createSagaMiddleware({ onError: (error: Error) => { console.error('UNCAUGHT SAGA ERROR', error.message, error.stack) } })
-console.log(process.env.NODE_ENV)
+let middleware: (root: Object, state: Object) => Object;
+const sagaMiddleware = createSagaMiddleware({
+  onError: (error: Error) => {
+    console.error('UNCAUGHT SAGA ERROR', error.message, error.stack);
+  },
+});
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
-  const loggerMiddleware = createLogger()
-  createStoreWithMiddleware = applyMiddleware(
-     loggerMiddleware,
-     sagaMiddleware
-  )(createStore)
+  const loggerMiddleware = createLogger();
+  middleware = applyMiddleware(loggerMiddleware, sagaMiddleware);
 } else {
-  createStoreWithMiddleware = applyMiddleware(
-    sagaMiddleware
-  )(createStore)
+  middleware = applyMiddleware(sagaMiddleware);
 }
 
 export default function configureStore(initialState: Object): Object {
-  const store = createStoreWithMiddleware(rootReducer, initialState)
-  sagaMiddleware.run(rootSaga)
-  return store
+  const store = createStore(rootReducer, compose(middleware));
+  sagaMiddleware.run(rootSaga);
+  return store;
 }

@@ -1,11 +1,16 @@
-exports[`test Prints a list of houses 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Prints a list of houses 1`] = `
 <div
-  className="houseList">
+  className="houseList"
+>
   <div
     className="house"
-    onClick={[Function]}>
+    onClick={[Function]}
+  >
     <div
-      className="houseName">
+      className="houseName"
+    >
       House Stark of Winterfell
     </div>
   </div>

@@ -1,33 +1,42 @@
-exports[`test Displays a house 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Displays a house 1`] = `
 <div
   className="house"
-  onClick={[Function]}>
+  onClick={[Function]}
+>
   <div
-    className="houseName">
+    className="houseName"
+  >
     House Stark of Winterfell
   </div>
 </div>
 `;
 
-exports[`test Displays a house 2`] = `
+exports[`Displays a house 2`] = `
 <div
   className="house"
-  onClick={[Function]}>
+  onClick={[Function]}
+>
   <div
-    className="houseName">
+    className="houseName"
+  >
     House Stark of Winterfell
   </div>
   <div
-    className="houseDetails">
+    className="houseDetails"
+  >
     <div
-      className="houseDetail">
+      className="houseDetail"
+    >
       <b>
         Coat of Arms: 
       </b>
       Dire wolf
     </div>
     <div
-      className="houseDetail">
+      className="houseDetail"
+    >
       <b>
         Words: 
       </b>
@@ -35,10 +44,12 @@ exports[`test Displays a house 2`] = `
     </div>
     <div
       className="houseOpen"
-      onClick={[Function]}>
+      onClick={[Function]}
+    >
       <i
         aria-hidden="true"
-        className="fa fa-external-link" />
+        className="fa fa-external-link"
+      />
     </div>
   </div>
 </div>

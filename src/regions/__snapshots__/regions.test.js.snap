@@ -1,24 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Displays the regions Region snapshot 1`] = `
 <div
-  className="regions">
+  className="regions"
+>
   <div
     className="regionItem active"
-    onClick={[Function]}>
+    onClick={[Function]}
+  >
     All
   </div>
   <div
     className="regionItem"
-    onClick={[Function]}>
+    onClick={[Function]}
+  >
     The North
   </div>
   <div
     className="regionItem"
-    onClick={[Function]}>
+    onClick={[Function]}
+  >
     Dorne
   </div>
   <div
     className="regionItem"
-    onClick={[Function]}>
+    onClick={[Function]}
+  >
     North of The Wall
   </div>
 </div>

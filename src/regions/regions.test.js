@@ -1,7 +1,11 @@
-import * as Immutable from 'immutable'
+import { Set } from 'immutable';
 import React from 'react';
-import { Regions } from './regions'
-import renderer from 'react-test-renderer'
+import { Regions } from './regions';
+import renderer from 'react-test-renderer';
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 
 // regions: Set<string>,
 // selectedRegion: string,
@@ -10,14 +14,17 @@ import renderer from 'react-test-renderer'
 describe('Displays the regions', () => {
   it('Region snapshot', () => {
     const component = renderer.create(
-      <Regions regions={ new Immutable.Set([ '', 'The North', 'Dorne', 'North of The Wall' ])} selectedRegion={ '' } />
+      <Regions
+        regions={Set(['', 'The North', 'Dorne', 'North of The Wall'])}
+        selectedRegion={''}
+      />
     );
-    let regions = component.toJSON()
-    expect(regions).toMatchSnapshot()
-  })
+    let regions = component.toJSON();
+    expect(regions).toMatchSnapshot();
+  });
 
   //
   // regions.find('The North').onClick()
   // regions = component.toJSON()
   // expect(regions).toMatchSnapshot()
-})
+});
