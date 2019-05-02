@@ -16,5 +16,4 @@ before_script:
 
 test_async:
   script:
-    - npm install
-    - npm test
+    - yarn test
