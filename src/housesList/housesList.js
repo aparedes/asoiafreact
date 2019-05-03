@@ -1,9 +1,7 @@
 /* @flow */
 import './houseList.css';
-import * as Immutable from 'immutable';
-import type { List, Map } from 'immutable';
-import React, { Component } from 'react';
-import type { Element } from 'react';
+import React from 'react';
+import { List, Map } from 'immutable';
 import HouseItem from './houseItem/houseItem';
 import { connect } from 'react-redux';
 
@@ -36,7 +34,7 @@ function mapStateToProps(state: ReduxState) {
   if (state.app.search && state.app.search.length > 0) {
     const search = new RegExp(state.app.search.toLowerCase());
     allHouses = state.houses
-      .getIn(['houses'], new Immutable.Map())
+      .getIn(['houses'], Map())
       .filter(house => search.test(house.get('name', '').toLowerCase()))
       .sortBy(house => house.getIn(['name'], ''))
       .keySeq()
@@ -44,13 +42,13 @@ function mapStateToProps(state: ReduxState) {
   } else if (state.app.region) {
     const region = new RegExp(state.app.region.toLowerCase());
     allHouses = state.houses
-      .getIn(['houses'], new Immutable.Map())
+      .getIn(['houses'], Map())
       .filter(house => region.test(house.get('region', '').toLowerCase()))
       .sortBy(house => house.getIn(['name'], ''))
       .keySeq()
       .toList();
   } else {
-    allHouses = state.houses.getIn(['housesIds'], new Immutable.List());
+    allHouses = state.houses.getIn(['housesIds'], List());
   }
   return {
     allHouses,
