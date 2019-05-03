@@ -1,4 +1,4 @@
-import * as Immutable from 'immutable';
+import { List } from 'immutable';
 import React from 'react';
 import { HousesList } from './housesList';
 import renderer from 'react-test-renderer';
@@ -24,7 +24,7 @@ jest.mock('./houseItem/houseItem', () => {
 
 test('Prints a list of houses', () => {
   const component = renderer.create(
-    <HousesList getting={false} allHouses={new Immutable.List(['1'])} />
+    <HousesList getting={false} allHouses={List(['1'])} />
   );
   let housesList = component.toJSON();
   expect(housesList).toMatchSnapshot();

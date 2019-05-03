@@ -3,6 +3,7 @@ import './houseItem.css';
 import React, { Component } from 'react';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
+import type { ReduxState, Dispatch } from '../../store/constants/reduxTypes';
 
 type Props = {
   coatOfArms: string,
@@ -24,15 +25,7 @@ export class HouseItem extends Component<Props, State> {
   static displayName = 'House';
   changeState: () => void;
   openExternal: (evt: TouchEvent) => void;
-
-  constructor(props: Props) {
-    super(props);
-    this.state = { showFull: false };
-  }
-
-  componentDidMount() {
-    this.setState({ showFull: false });
-  }
+  state = { showFull: false };
 
   componentDidUpdate(prevProps: Props, prevState: State) {
     if (
@@ -93,8 +86,8 @@ export class HouseItem extends Component<Props, State> {
   }
 }
 
-type ReduxState = { houses: Map<string, Map<string, *>> };
-function mapStateToProps(state: ReduxState, { houseId }: { houseId: string }) {
+type ReduxProps = { houseId: string };
+function mapStateToProps(state: ReduxState, { houseId }: ReduxProps) {
   const house = state.houses.getIn(['houses', houseId], Map());
   return {
     coatOfArms: house.getIn(['coatOfArms'], ''),
@@ -106,10 +99,7 @@ function mapStateToProps(state: ReduxState, { houseId }: { houseId: string }) {
   };
 }
 
-function mapDispatchToProps(
-  dispatch: Dispatch,
-  { houseId }: { houseId: string }
-) {
+function mapDispatchToProps(dispatch: Dispatch, { houseId }: ReduxProps) {
   return {
     getHouse: () => dispatch({ type: 'GET_HOUSE', houseId }),
     openHouse: () => dispatch({ type: 'OPEN_HOUSE', houseId }),

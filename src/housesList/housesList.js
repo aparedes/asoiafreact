@@ -5,6 +5,8 @@ import { List, Map } from 'immutable';
 import HouseItem from './houseItem/houseItem';
 import { connect } from 'react-redux';
 
+import type { ReduxState } from '../store/constants/reduxTypes';
+
 type Props = {
   allHouses: List<string>,
   error: ?string,
@@ -25,10 +27,6 @@ export function HousesList(props: Props) {
   );
 }
 
-type ReduxState = {
-  app: { search: string, region: string },
-  houses: Map<string, *>,
-};
 function mapStateToProps(state: ReduxState) {
   let allHouses;
   if (state.app.search && state.app.search.length > 0) {

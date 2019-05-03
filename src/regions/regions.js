@@ -1,9 +1,10 @@
 /* @flow */
 import './regions.css';
-import * as Immutable from 'immutable';
+import { Set } from 'immutable';
 import React, { Component } from 'react';
-import type { Map, Set } from 'immutable';
 import { connect } from 'react-redux';
+
+import type { ReduxState, Dispatch } from '../store/constants/reduxTypes';
 
 type Props = {
   regions: Set<string>,
@@ -35,16 +36,14 @@ export class Regions extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: {
-  app: { region: string },
-  houses: Map<string, *>,
-}) => ({
+const mapStateToProps = (state: ReduxState) => ({
   selectedRegion: state.app.region,
-  regions: state.houses.getIn(['regions'], new Immutable.Set()),
+  regions: state.houses.getIn(['regions'], Set()),
 });
-const mapDistachToProps = (dispatch: (action: Object) => void) => ({
+const mapDistachToProps = (dispatch: Dispatch) => ({
   setRegion: (region: string) => dispatch({ type: 'SET_REGION', region }),
 });
+
 export default connect(
   mapStateToProps,
   mapDistachToProps
