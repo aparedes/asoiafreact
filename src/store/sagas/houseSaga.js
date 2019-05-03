@@ -1,5 +1,5 @@
 /* @flow */
-import * as Immutable from 'immutable';
+import { Map, Set } from 'immutable';
 import { call, put } from 'redux-saga/effects';
 import { takeEvery, takeLatest } from 'redux-saga/effects';
 
@@ -43,10 +43,10 @@ function* getAllHouses(): Generator<*, *, *> {
       `${EndPoint}?query={allHouses{totalCount houses{id name region}}}`
     );
     if (houses) {
-      let allHouses = new Immutable.Map();
-      let regions = new Immutable.Set();
+      let allHouses = Map();
+      let regions = Set();
       houses.data.allHouses.houses.forEach(house => {
-        allHouses = allHouses.set(house.id, new Immutable.Map(house));
+        allHouses = allHouses.set(house.id, Map(house));
         regions = regions.add(house.region);
       });
       regions = regions.sort();
@@ -72,14 +72,11 @@ function* getHouse({ houseId }: { houseId: string }): Generator<*, *, *> {
       const {
         data: { house },
       } = houseResponse;
-      let currentLord;
+      let { currentLord, ...allHouse } = house;
       if (house.currentLord) {
         currentLord = house.currentLord.name;
       }
-      const immutableHouse = new Immutable.Map(house).set(
-        'currentLord',
-        currentLord
-      );
+      const immutableHouse = Map(allHouse).set('currentLord', currentLord);
       yield put({ type: 'GOT_HOUSE', houseId, house: immutableHouse });
       console.log(JSON.stringify(house, null, '\t'));
     }

@@ -1,8 +1,7 @@
 /* @flow */
 import './houseItem.css';
-import * as Immutable from 'immutable';
 import React, { Component } from 'react';
-import type { Map } from 'immutable';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 
 type Props = {
@@ -28,8 +27,6 @@ export class HouseItem extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.changeState = this.changeState.bind(this);
-    this.openExternal = this.openExternal.bind(this);
     this.state = { showFull: false };
   }
 
@@ -48,18 +45,19 @@ export class HouseItem extends Component<Props, State> {
     }
   }
 
-  changeState() {
+  changeState = () => {
     this.setState({
       showFull: !this.state.showFull,
     });
-  }
+  };
 
-  openExternal(evt: TouchEvent) {
+  openExternal = (evt: TouchEvent) => {
     evt.preventDefault();
     evt.stopPropagation();
     this.props.openHouse();
-  }
-  renderDetails() {
+  };
+
+  renderDetails = () => {
     const { coatOfArms, words } = this.props;
     return (
       <div className={'houseDetails'}>
@@ -76,7 +74,8 @@ export class HouseItem extends Component<Props, State> {
         </div>
       </div>
     );
-  }
+  };
+
   render() {
     const { error, getting } = this.props;
     return (
@@ -94,11 +93,9 @@ export class HouseItem extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (
-  state: { houses: Map<string, Map<string, *>> },
-  { houseId }: { houseId: string }
-): Object => {
-  const house = state.houses.getIn(['houses', houseId], new Immutable.Map());
+type ReduxState = { houses: Map<string, Map<string, *>> };
+function mapStateToProps(state: ReduxState, { houseId }: { houseId: string }) {
+  const house = state.houses.getIn(['houses', houseId], Map());
   return {
     coatOfArms: house.getIn(['coatOfArms'], ''),
     error: house.getIn(['error'], null),
@@ -107,15 +104,18 @@ const mapStateToProps = (
     name: house.getIn(['name'], ''),
     words: house.getIn(['words'], ''),
   };
-};
+}
 
-const mapDispatchToProps = (
-  dispatch: (action: Object) => void,
+function mapDispatchToProps(
+  dispatch: Dispatch,
   { houseId }: { houseId: string }
-): Object => ({
-  getHouse: () => dispatch({ type: 'GET_HOUSE', houseId }),
-  openHouse: () => dispatch({ type: 'OPEN_HOUSE', houseId }),
-});
+) {
+  return {
+    getHouse: () => dispatch({ type: 'GET_HOUSE', houseId }),
+    openHouse: () => dispatch({ type: 'OPEN_HOUSE', houseId }),
+  };
+}
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
