@@ -38,7 +38,19 @@
     "redux-saga": "^1.0.2"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "react/jsx-no-bind": [
+        true,
+        {
+          "ignoreDOMComponents": false,
+          "ignoreRefs": false,
+          "allowArrowFunctions": false,
+          "allowFunctions": false,
+          "allowBind": false
+        }
+      ]
+    }
   },
   "scripts": {
     "build": "react-scripts build",
