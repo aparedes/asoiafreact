@@ -2,10 +2,6 @@ import * as Immutable from 'immutable';
 import React from 'react';
 import { HousesList } from './housesList';
 import renderer from 'react-test-renderer';
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
 
 jest.mock('./houseItem/houseItem', () => {
   const React = require('react');
