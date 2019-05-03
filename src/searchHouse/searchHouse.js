@@ -6,18 +6,18 @@ import { connect } from 'react-redux';
 type Props = {
   setSearch: (search: string) => void,
 };
-
+type KeyEvt = { target: { value: string } };
 export class SearchHouse extends Component<Props> {
   static displayName = 'SearchHouse';
 
-  onChange: (evt: KeyboardEvent) => void;
+  onChange: (evt: KeyEvt) => void;
 
   constructor(props: Props) {
     super(props);
     this.onChange = this.onChange.bind(this);
   }
 
-  onChange(evt: KeyboardEvent) {
+  onChange(evt: KeyEvt) {
     const input = evt.target;
     console.log(input.value);
     this.props.setSearch(input.value);

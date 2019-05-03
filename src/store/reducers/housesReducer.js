@@ -18,6 +18,7 @@ type GET_HOUSE_ERROR = {
   error: string,
 };
 type GOT_HOUSE = { type: 'GOT_HOUSE', houseId: string, house: Map<string, *> };
+
 export type Action =
   | GET_ALL_HOUSES
   | GET_ALL_HOUSES_ERROR
