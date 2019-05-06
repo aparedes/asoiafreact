@@ -16,6 +16,7 @@
     "eslint-plugin-jsx-a11y": "6.2.1",
     "eslint-plugin-react": "7.13.0",
     "flow-bin": "^0.98.0",
+    "jest": "24.7.1",
     "react-test-renderer": "^16.8.6",
     "serve": "^11.0.0",
     "sinon": "^7.3.2"
@@ -23,7 +24,6 @@
   "dependencies": {
     "husky": "^2.2.0",
     "immutable": "^3.8.1",
-    "jest": "^24.7.1",
     "jest-enzyme": "^7.0.2",
     "lint-staged": "^8.1.6",
     "prop-types": "^15.7.2",
@@ -89,5 +89,8 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "resolutions": {
+    "babel-jest": "24.7.1"
   }
 }
