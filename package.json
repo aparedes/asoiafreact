@@ -58,7 +58,8 @@
     "now-start": "list build/",
     "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom",
-    "now-dev": "react-scripts start"
+    "now-dev": "react-scripts start",
+    "now-build": "react-scripts build"
   },
   "lint-staged": {
     "src/**/*.js": [
