@@ -1,4 +1,4 @@
-// flow-typed signature: 45a4a4095370ff920dcca0d3a6eea8aa
+// flow-typed signature: 519ce5727754ea4160ca686eb1d708dd
 // flow-typed version: <<STUB>>/react-scripts_v^3.0.0/flow_v0.98.0
 
 /**
@@ -47,6 +47,10 @@ declare module 'react-scripts/config/modules' {
 }
 
 declare module 'react-scripts/config/paths' {
+  declare module.exports: any;
+}
+
+declare module 'react-scripts/config/pnpTs' {
   declare module.exports: any;
 }
 
@@ -127,6 +131,9 @@ declare module 'react-scripts/config/modules.js' {
 }
 declare module 'react-scripts/config/paths.js' {
   declare module.exports: $Exports<'react-scripts/config/paths'>;
+}
+declare module 'react-scripts/config/pnpTs.js' {
+  declare module.exports: $Exports<'react-scripts/config/pnpTs'>;
 }
 declare module 'react-scripts/config/webpack.config.js' {
   declare module.exports: $Exports<'react-scripts/config/webpack.config'>;
