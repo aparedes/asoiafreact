@@ -1,6 +1,8 @@
 /* @flow */
 import './App.css';
+
 import React, { useEffect } from 'react';
+
 import HousesList from './housesList/housesList';
 import type { Map } from 'immutable';
 import SearchHouse from './searchHouse/searchHouse';
