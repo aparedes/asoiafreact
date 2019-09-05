@@ -34,7 +34,7 @@ function fetchData(url: string, options?: Object) {
 }
 const EndPoint =
   process.env.NODE_ENV === 'production'
-    ? 'https://iceandfire-graphql-hbwxqxtabz.now.sh/'
+    ? 'https://iceandfire-graphql.walls.now.sh/'
     : 'http://localhost:5000/';
 function* getAllHouses(): Generator<*, *, *> {
   try {
