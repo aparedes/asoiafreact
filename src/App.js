@@ -4,10 +4,12 @@ import './App.css';
 import React, { useEffect } from 'react';
 
 import HousesList from './housesList/housesList';
-import type { Map } from 'immutable';
+
 import SearchHouse from './searchHouse/searchHouse';
 import Regions from './regions/regions';
 import { connect } from 'react-redux';
+
+import type { Map } from 'immutable';
 
 type Props = {
   getAllHouses: () => void,
@@ -32,7 +34,4 @@ const mapDistachToProps = (dispatch: (action: Object) => void) => ({
   getAllHouses: () => dispatch({ type: 'GET_ALL_HOUSES' }),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDistachToProps
-)(App);
+export default connect(mapStateToProps, mapDistachToProps)(App);

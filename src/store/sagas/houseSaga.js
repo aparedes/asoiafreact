@@ -28,14 +28,15 @@ type HouseType = {
 function fetchData(url: string, options?: Object) {
   return new Promise((resolve, reject) => {
     fetch(url, options)
-      .then(r => resolve(r.json()))
+      .then((r) => resolve(r.json()))
       .catch(reject);
   });
 }
 const EndPoint =
-  process.env.NODE_ENV === 'production'
-    ? 'https://iceandfire-graphql.walls.now.sh/'
-    : 'http://localhost:5000/';
+  // process.env.NODE_ENV === 'production'
+  // ?
+  'https://iceandfire.aparedes.net/';
+// : 'http://localhost:5000/';
 function* getAllHouses(): Generator<*, *, *> {
   try {
     const houses: ?AllHousesType = yield call(
@@ -45,13 +46,13 @@ function* getAllHouses(): Generator<*, *, *> {
     if (houses) {
       let allHouses = Map();
       let regions = Set();
-      houses.data.allHouses.houses.forEach(house => {
+      houses.data.allHouses.houses.forEach((house) => {
         allHouses = allHouses.set(house.id, Map(house));
         regions = regions.add(house.region);
       });
       regions = regions.sort();
       const allHousesIds = allHouses
-        .sortBy(house => house.getIn(['name'], ''))
+        .sortBy((house) => house.getIn(['name'], ''))
         .keySeq()
         .toList();
       yield put({ type: 'GOT_ALL_HOUSES', allHouses, allHousesIds, regions });
@@ -84,7 +85,7 @@ function* getHouse({ houseId }: { houseId: string }): Generator<*, *, *> {
     yield put({ type: 'GET_HOUSE_ERROR', houseId, error: e.message });
   }
 }
-export default function(): Array<*> {
+export default function (): Array<*> {
   return [
     takeLatest('GET_ALL_HOUSES', getAllHouses),
     takeEvery('GET_HOUSE', getHouse),
