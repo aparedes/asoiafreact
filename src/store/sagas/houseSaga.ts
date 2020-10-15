@@ -1,29 +1,35 @@
 /* @flow */
 import { Map, Set } from 'immutable';
-import { call, put } from 'redux-saga/effects';
-import { takeEvery, takeLatest } from 'redux-saga/effects';
+import { SagaIterator } from 'redux-saga';
+import {
+  call,
+  ForkEffect,
+  put,
+  takeEvery,
+  takeLatest,
+} from 'redux-saga/effects';
 
-type AllHousesType = {
+interface AllHousesType {
   data: {
     allHouses: {
-      totalCount: number,
-      houses: Array<{ id: string, name: string, region: string }>,
-    },
-  },
-};
-type HouseType = {
+      totalCount: number;
+      houses: Array<{ id: string; name: string; region: string }>;
+    };
+  };
+}
+interface HouseType {
   data: {
     house: {
-      name: string,
+      name: string;
       currentLord: {
-        name: string,
-      },
-      region: string,
-      coatOfArms: string,
-      words: string,
-    },
-  },
-};
+        name: string;
+      };
+      region: string;
+      coatOfArms: string;
+      words: string;
+    };
+  };
+}
 
 function fetchData(url: string, options?: Object) {
   return new Promise((resolve, reject) => {
@@ -37,22 +43,27 @@ const EndPoint =
   // ?
   'https://iceandfire.aparedes.net/';
 // : 'http://localhost:5000/';
-function* getAllHouses(): Generator<*, *, *> {
+
+interface GetAllHousesAction {
+  type: 'GET_ALL_HOUSES';
+}
+
+function* getAllHouses(_action: GetAllHousesAction): SagaIterator<void> {
   try {
-    const houses: ?AllHousesType = yield call(
+    const houses: AllHousesType | undefined = yield call(
       fetchData,
       `${EndPoint}?query={allHouses{totalCount houses{id name region}}}`
     );
     if (houses) {
-      let allHouses = Map();
-      let regions = Set();
+      let allHouses = Map<string, Map<string, string>>();
+      let regions: Set<string> = Set();
       houses.data.allHouses.houses.forEach((house) => {
         allHouses = allHouses.set(house.id, Map(house));
         regions = regions.add(house.region);
       });
-      regions = regions.sort();
+      regions = regions.sort().toSet();
       const allHousesIds = allHouses
-        .sortBy((house) => house.getIn(['name'], ''))
+        .sortBy((house) => house?.getIn(['name'], '') ?? '')
         .keySeq()
         .toList();
       yield put({ type: 'GOT_ALL_HOUSES', allHouses, allHousesIds, regions });
@@ -65,19 +76,26 @@ function* getAllHouses(): Generator<*, *, *> {
   }
 }
 
-function* getHouse({ houseId }: { houseId: string }): Generator<*, *, *> {
+interface GetHouseAction {
+  type: 'GET_HOUSE';
+  houseId: string;
+}
+
+function* getHouse({ houseId }: GetHouseAction): SagaIterator<void> {
   try {
     const url = `${EndPoint}?query={house(id:"${houseId}"){name currentLord{name} region coatOfArms words}}`;
-    const houseResponse: ?HouseType = yield call(fetchData, url);
+    const houseResponse: HouseType | null = yield call(fetchData, url);
     if (houseResponse) {
       const {
         data: { house },
       } = houseResponse;
-      let { currentLord, ...allHouse } = house;
+      let currentLord = '';
       if (house.currentLord) {
         currentLord = house.currentLord.name;
       }
-      const immutableHouse = Map(allHouse).set('currentLord', currentLord);
+      const immutableHouse = Map(house)
+        .remove('currentLord')
+        .set('currentLord', currentLord);
       yield put({ type: 'GOT_HOUSE', houseId, house: immutableHouse });
       console.log(JSON.stringify(house, null, '\t'));
     }
@@ -85,7 +103,7 @@ function* getHouse({ houseId }: { houseId: string }): Generator<*, *, *> {
     yield put({ type: 'GET_HOUSE_ERROR', houseId, error: e.message });
   }
 }
-export default function (): Array<*> {
+export default function (): ForkEffect<never>[] {
   return [
     takeLatest('GET_ALL_HOUSES', getAllHouses),
     takeEvery('GET_HOUSE', getHouse),

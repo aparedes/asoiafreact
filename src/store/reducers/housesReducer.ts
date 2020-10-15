@@ -1,32 +1,35 @@
 /* @flow */
 
-import { Map } from 'immutable';
-import type { List, Set } from 'immutable';
+import { Map, List, Set } from 'immutable';
 
 type GET_ALL_HOUSES = { type: 'GET_ALL_HOUSES' };
-type GET_ALL_HOUSES_ERROR = { type: 'GET_ALL_HOUSES_ERROR', error: string };
+type GET_ALL_HOUSES_ERROR = { type: 'GET_ALL_HOUSES_ERROR'; error: string };
 type GOT_ALL_HOUSES = {
-  type: 'GOT_ALL_HOUSES',
-  allHousesIds: List<string>,
-  allHouses: Map<string, *>,
-  regions: Set<string>,
+  type: 'GOT_ALL_HOUSES';
+  allHousesIds: List<string>;
+  allHouses: Map<string, unknown>;
+  regions: Set<string>;
 };
-type GET_HOUSE = { type: 'GET_HOUSE', houseId: string };
+type GET_HOUSE = { type: 'GET_HOUSE'; houseId: string };
 type GET_HOUSE_ERROR = {
-  type: 'GET_HOUSE_ERROR',
-  houseId: string,
-  error: string,
+  type: 'GET_HOUSE_ERROR';
+  houseId: string;
+  error: string;
 };
-type GOT_HOUSE = { type: 'GOT_HOUSE', houseId: string, house: Map<string, *> };
+interface GOT_HOUSE {
+  type: 'GOT_HOUSE';
+  houseId: string;
+  house: Map<string, unknown>;
+}
 
-export type Action =
+export type HouseAction =
   | GET_ALL_HOUSES
   | GET_ALL_HOUSES_ERROR
   | GOT_ALL_HOUSES
   | GET_HOUSE_ERROR
   | GOT_HOUSE
   | GET_HOUSE;
-export default function(state: Map<string, *>, action: Action) {
+export default function (state: Map<string, unknown>, action: HouseAction) {
   if (!state) {
     state = Map();
   }
