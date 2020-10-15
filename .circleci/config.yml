@@ -35,5 +35,6 @@ jobs:
 
       # run lint!
       - run: yarn lint
+      - run: yarn tsc --noEmit  --skipLibCheck 
       # run tests!
       - run: yarn test
