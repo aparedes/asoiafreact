@@ -1,7 +1,7 @@
 /* @flow */
 import './regions.css';
 import { Set } from 'immutable';
-import React, { Component, useCallback } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { ReduxState, Dispatch } from '../store/constants/reduxTypes';
