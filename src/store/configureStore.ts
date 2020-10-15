@@ -5,12 +5,11 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from './rootReducer';
 import rootSaga from './sagas/rootSaga';
 
-import type {
-  Dispatch,
+import {
   ReduxActions,
   ReduxState,
 } from './constants/reduxTypes';
-import type { Store, StoreEnhancer } from 'redux';
+import { Store } from 'redux';
 
 let middleware;
 const sagaMiddleware = createSagaMiddleware({

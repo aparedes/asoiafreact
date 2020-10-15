@@ -1,7 +1,7 @@
 /* @flow */
 import './regions.css';
 import { Set } from 'immutable';
-import React, { Component } from 'react';
+import React, { Component, useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import type { ReduxState, Dispatch } from '../store/constants/reduxTypes';
@@ -12,24 +12,33 @@ type Props = {
   setRegion: (region: string) => void,
 };
 
+function Region(props) {
+  const { selectedRegion, region, onClick } = props;
+  const onClickRegion = useCallback(() => onClick(region), [onClick, region]);
+  return (
+    <div
+      className={selectedRegion === region ? 'regionItem active' : 'regionItem'}
+      onClick={onClickRegion}
+    >
+      {region.length === 0 ? 'All' : region}
+    </div>
+  );
+}
 export class Regions extends Component<Props> {
-  onClick(region: string) {
+  onClick = (region: string) => {
     this.props.setRegion(region);
-  }
+  };
   render() {
     const { regions, selectedRegion } = this.props;
     return (
       <div className={'regions'}>
-        {regions.map(region => (
-          <div
-            className={
-              selectedRegion === region ? 'regionItem active' : 'regionItem'
-            }
+        {regions.map((region) => (
+          <Region
+            selectedRegion={selectedRegion}
+            region={region}
             key={region}
-            onClick={this.onClick.bind(this, region)}
-          >
-            {region.length === 0 ? 'All' : region}
-          </div>
+            onClick={this.onClick}
+          />
         ))}
       </div>
     );
@@ -44,7 +53,4 @@ const mapDistachToProps = (dispatch: Dispatch) => ({
   setRegion: (region: string) => dispatch({ type: 'SET_REGION', region }),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDistachToProps
-)(Regions);
+export default connect(mapStateToProps, mapDistachToProps)(Regions);

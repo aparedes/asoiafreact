@@ -1,6 +1,6 @@
 import React from 'react';
-import { HouseItem } from './houseItem'
-import renderer from 'react-test-renderer'
+import { HouseItem } from './houseItem';
+import renderer from 'react-test-renderer';
 
 // coatOfArms: string,
 // error: ?string,
@@ -10,14 +10,21 @@ import renderer from 'react-test-renderer'
 // name: string,
 // words: string,
 
+function GetHouse() {}
 test('Displays a house', () => {
   const component = renderer.create(
-    <HouseItem houseId={ '1' } name={ 'House Stark of Winterfell' } words={ 'Winter is Comming' } coatOfArms={ 'Dire wolf' } getHouse={ () => {}} />
+    <HouseItem
+      houseId={'1'}
+      name={'House Stark of Winterfell'}
+      words={'Winter is Comming'}
+      coatOfArms={'Dire wolf'}
+      getHouse={GetHouse}
+    />
   );
-  let houseItem = component.toJSON()
-  expect(houseItem).toMatchSnapshot()
+  let houseItem = component.toJSON();
+  expect(houseItem).toMatchSnapshot();
 
-  houseItem.props.onClick()
-  houseItem = component.toJSON()
-  expect(houseItem).toMatchSnapshot()
-})
+  houseItem.props.onClick();
+  houseItem = component.toJSON();
+  expect(houseItem).toMatchSnapshot();
+});
