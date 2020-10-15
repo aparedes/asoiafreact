@@ -8,12 +8,9 @@ import HousesList from './housesList/housesList';
 import SearchHouse from './searchHouse/searchHouse';
 import Regions from './regions/regions';
 import { connect } from 'react-redux';
+import { Dispatch } from './store/constants/reduxTypes';
 
-import type { Map } from 'immutable';
-
-type Props = {
-  getAllHouses: () => void,
-};
+type Props = DTP;
 
 export function App(props: Props) {
   const { getAllHouses } = props;
@@ -29,9 +26,11 @@ export function App(props: Props) {
   );
 }
 
-const mapStateToProps = (state: { houses: Map<string, *> }) => ({});
-const mapDistachToProps = (dispatch: (action: Object) => void) => ({
+interface DTP {
+  getAllHouses: () => void;
+}
+const mapDistachToProps = (dispatch: Dispatch): DTP => ({
   getAllHouses: () => dispatch({ type: 'GET_ALL_HOUSES' }),
 });
 
-export default connect(mapStateToProps, mapDistachToProps)(App);
+export default connect(null, mapDistachToProps)(App);

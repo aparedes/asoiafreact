@@ -29,10 +29,11 @@ export type HouseAction =
   | GET_HOUSE_ERROR
   | GOT_HOUSE
   | GET_HOUSE;
-export default function (state: Map<string, unknown>, action: HouseAction) {
-  if (!state) {
-    state = Map();
-  }
+
+export default function (
+  state: Map<string, unknown> = Map(),
+  action: HouseAction
+): Map<string, unknown> {
   if (action) {
     switch (action.type) {
       // ALL HOUSES

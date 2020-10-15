@@ -1,10 +1,10 @@
 import './searchHouse.css';
 import React, { Component, ChangeEvent } from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from '../store/constants/reduxTypes';
+import { AppEnum } from '../store/reducers/app';
 
-interface Props {
-  setSearch: (search: string) => void;
-}
+interface Props extends DTP {}
 interface KeyEvt {
   target: { value: string };
 }
@@ -34,10 +34,11 @@ export class SearchHouse extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: Object): Object => ({});
-
-const mapDispatchToProps = (dispatch: (action: Object) => void): Object => ({
-  setSearch: (search: string) => dispatch({ type: 'SET_SEARCH', search }),
+interface DTP {
+  setSearch: (search: string) => void;
+}
+const mapDispatchToProps = (dispatch: Dispatch): DTP => ({
+  setSearch: (search: string) => dispatch({ type: AppEnum.SET_SEARCH, search }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchHouse);
+export default connect(null, mapDispatchToProps)(SearchHouse);
