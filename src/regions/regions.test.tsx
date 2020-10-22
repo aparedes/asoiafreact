@@ -1,11 +1,7 @@
+import { render, screen } from '@testing-library/react';
 import { Set } from 'immutable';
 import React from 'react';
 import { Regions } from './regions';
-import renderer from 'react-test-renderer';
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
 
 // regions: Set<string>,
 // selectedRegion: string,
@@ -13,14 +9,15 @@ configure({ adapter: new Adapter() });
 
 describe('Displays the regions', () => {
   it('Region snapshot', () => {
-    const component = renderer.create(
+    const r = render(
       <Regions
         regions={Set(['', 'The North', 'Dorne', 'North of The Wall'])}
         selectedRegion={''}
+        setRegion={jest.fn()}
       />
     );
-    let regions = component.toJSON();
-    expect(regions).toMatchSnapshot();
+
+    expect(r).toMatchSnapshot();
   });
 
   //

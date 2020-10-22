@@ -1,7 +1,7 @@
 /* @flow */
 import './regions.css';
 import { Set } from 'immutable';
-import React, { Component } from 'react';
+import React, { Component, useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { ReduxState, Dispatch } from '../store/constants/reduxTypes';
@@ -9,6 +9,20 @@ import { AppEnum } from '../store/reducers/app';
 
 type Props = STP & DTP;
 
+function Region(props) {
+  const { onClick, region } = props;
+  const onClickRegion = useCallback(() => onClick(region), [onClick, region]);
+  return (
+    <div
+      data-testid="regionItem"
+      // {...(/active/.test(props.className) ? { 'data-testid': 'active' } : {})}
+      className={props.className}
+      onClick={onClickRegion}
+    >
+      {region.length === 0 ? 'All' : region}
+    </div>
+  );
+}
 export class Regions extends Component<Props> {
   onClick = (region: string) => {
     this.props.setRegion(region);
@@ -19,18 +33,15 @@ export class Regions extends Component<Props> {
     return (
       <div className={'regions'}>
         {regions.toArray().map((region) => {
-          const onClickRegion = () => this.onClick(region);
           return (
-            <div
+            <Region
               className={
                 selectedRegion === region ? 'regionItem active' : 'regionItem'
               }
               key={region}
-              // eslint-disable-next-line react/jsx-no-bind
-              onClick={onClickRegion}
-            >
-              {region.length === 0 ? 'All' : region}
-            </div>
+              onClick={this.onClick}
+              region={region}
+            />
           );
         })}
       </div>

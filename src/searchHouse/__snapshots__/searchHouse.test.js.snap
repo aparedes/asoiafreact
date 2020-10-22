@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Prints a list of houses 1`] = `
-<input
-  className="search"
-  onChange={[Function]}
-  placeholder="Search house"
-/>
-`;
