@@ -9,7 +9,12 @@ import { AppEnum } from '../store/reducers/app';
 
 type Props = STP & DTP;
 
-function Region(props) {
+interface RegionProps {
+  onClick: (region: string) => void;
+  region: string;
+  className: string;
+}
+function Region(props: RegionProps) {
   const { onClick, region } = props;
   const onClickRegion = useCallback(() => onClick(region), [onClick, region]);
   return (
