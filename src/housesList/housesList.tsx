@@ -1,28 +1,31 @@
 /* @flow */
 import './houseList.css';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { List, Map } from 'immutable';
 import HouseItem from './houseItem/houseItem';
 import { connect } from 'react-redux';
-
-import type { ReduxState } from '../store/constants/reduxTypes';
+import { ReduxState } from '../store/constants/reduxTypes';
 
 type Props = {
-  allHouses: List<string>,
-  error: ?string,
-  getting: boolean,
+  allHouses: List<string>;
+  error?: string;
+  getting: boolean;
 };
 
-function mapHouses(house: string) {
+function mapHouses(house?: string): ReactElement<void> | null {
+  if (!house) {
+    return null;
+  }
   return <HouseItem key={house} houseId={house} />;
 }
 
 export function HousesList(props: Props) {
   const { allHouses, error, getting } = props;
+
   return (
     <div className={'houseList'}>
       {getting ? 'Loading' : error}
-      {allHouses.map(mapHouses)}
+      {allHouses.map(mapHouses).toArray()}
     </div>
   );
 }
@@ -33,16 +36,20 @@ function mapStateToProps(state: ReduxState) {
     const search = new RegExp(state.app.search.toLowerCase());
     allHouses = state.houses
       .getIn(['houses'], Map())
-      .filter(house => search.test(house.get('name', '').toLowerCase()))
-      .sortBy(house => house.getIn(['name'], ''))
+      .filter((house: Map<string, unknown>) =>
+        search.test(house.getIn(['name'], '').toLowerCase())
+      )
+      .sortBy((house: Map<string, unknown>) => house.getIn(['name'], ''))
       .keySeq()
       .toList();
   } else if (state.app.region) {
     const region = new RegExp(state.app.region.toLowerCase());
     allHouses = state.houses
       .getIn(['houses'], Map())
-      .filter(house => region.test(house.get('region', '').toLowerCase()))
-      .sortBy(house => house.getIn(['name'], ''))
+      .filter((house: Map<string, unknown>) =>
+        region.test(house.getIn(['region'], '').toLowerCase())
+      )
+      .sortBy((house: Map<string, unknown>) => house.getIn(['name'], ''))
       .keySeq()
       .toList();
   } else {

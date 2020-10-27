@@ -1,30 +1,22 @@
 /* @flow */
 import './houseItem.css';
-import React, { Component } from 'react';
+import React, { Component, MouseEvent } from 'react';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
-import type { ReduxState, Dispatch } from '../../store/constants/reduxTypes';
+import { ReduxState, Dispatch } from '../../store/constants/reduxTypes';
 
-type Props = {
-  coatOfArms: string,
-  error: ?string,
-  getHouse: () => void,
-  getting: boolean,
-  got: boolean,
-  houseId: string,
-  name: string,
-  words: string,
-  openHouse: () => void,
-};
+interface DTP {
+  getHouse: () => void;
+  // openHouse: () => void;
+}
+type Props = STP & DTP & ReduxProps;
 
 type State = {
-  showFull: boolean,
+  showFull: boolean;
 };
 
 export class HouseItem extends Component<Props, State> {
   static displayName = 'House';
-  changeState: () => void;
-  openExternal: (evt: TouchEvent) => void;
   state = { showFull: false };
 
   componentDidUpdate(prevProps: Props, prevState: State) {
@@ -44,10 +36,10 @@ export class HouseItem extends Component<Props, State> {
     });
   };
 
-  openExternal = (evt: TouchEvent) => {
+  openExternal = (evt: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     evt.preventDefault();
     evt.stopPropagation();
-    this.props.openHouse();
+    // this.props.openHouse();
   };
 
   renderDetails = () => {
@@ -72,7 +64,7 @@ export class HouseItem extends Component<Props, State> {
   render() {
     const { error, getting } = this.props;
     return (
-      <div className={'house'} onClick={this.changeState}>
+      <div className={'house'} data-testid="house" onClick={this.changeState}>
         <div className={'houseName'}>{this.props.name}</div>
         {this.state.showFull
           ? getting
@@ -87,7 +79,17 @@ export class HouseItem extends Component<Props, State> {
 }
 
 type ReduxProps = { houseId: string };
-function mapStateToProps(state: ReduxState, { houseId }: ReduxProps) {
+
+interface STP {
+  coatOfArms: string;
+  error?: string;
+  getting: boolean;
+  got: boolean;
+  name: string;
+  words: string;
+}
+
+function mapStateToProps(state: ReduxState, { houseId }: ReduxProps): STP {
   const house = state.houses.getIn(['houses', houseId], Map());
   return {
     coatOfArms: house.getIn(['coatOfArms'], ''),
@@ -102,11 +104,7 @@ function mapStateToProps(state: ReduxState, { houseId }: ReduxProps) {
 function mapDispatchToProps(dispatch: Dispatch, { houseId }: ReduxProps) {
   return {
     getHouse: () => dispatch({ type: 'GET_HOUSE', houseId }),
-    openHouse: () => dispatch({ type: 'OPEN_HOUSE', houseId }),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HouseItem);
+export default connect(mapStateToProps, mapDispatchToProps)(HouseItem);
