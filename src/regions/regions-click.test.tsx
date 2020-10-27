@@ -21,6 +21,7 @@ describe('Regions click test', () => {
         setRegion={setRegion}
       />
     );
+    expect(regions).toMatchSnapshot();
     expect(screen.getAllByTestId('regionItem').length).toBe(regionNames.size);
     expect(
       screen

@@ -30,7 +30,7 @@ export type HouseAction =
   | GOT_HOUSE
   | GET_HOUSE;
 
-export default function (
+export default function HouseReducers(
   state: Map<string, unknown> = Map(),
   action: HouseAction
 ): Map<string, unknown> {

@@ -23,7 +23,7 @@ function initState(): AppState {
   return {} as AppState;
 }
 
-export default function (
+export default function AppReducer(
   state: AppState = initState(),
   action: Action
 ): AppState {

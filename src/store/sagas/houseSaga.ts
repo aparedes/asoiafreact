@@ -103,7 +103,7 @@ function* getHouse({ houseId }: GetHouseAction): SagaIterator<void> {
     yield put({ type: 'GET_HOUSE_ERROR', houseId, error: e.message });
   }
 }
-export default function (): ForkEffect<never>[] {
+export default function HouseSaga(): ForkEffect<never>[] {
   return [
     takeLatest('GET_ALL_HOUSES', getAllHouses),
     takeEvery('GET_HOUSE', getHouse),

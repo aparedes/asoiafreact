@@ -5,9 +5,6 @@ import { Dispatch } from '../store/constants/reduxTypes';
 import { AppEnum } from '../store/reducers/app';
 
 interface Props extends DTP {}
-interface KeyEvt {
-  target: { value: string };
-}
 
 export class SearchHouse extends Component<Props> {
   static displayName = 'SearchHouse';
