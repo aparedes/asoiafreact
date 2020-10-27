@@ -2,20 +2,28 @@
 
 import { Map, List, Set } from 'immutable';
 
-type GET_ALL_HOUSES = { type: 'GET_ALL_HOUSES' };
-type GET_ALL_HOUSES_ERROR = { type: 'GET_ALL_HOUSES_ERROR'; error: string };
-type GOT_ALL_HOUSES = {
+export interface GET_ALL_HOUSES {
+  type: 'GET_ALL_HOUSES';
+}
+export interface GET_ALL_HOUSES_ERROR {
+  type: 'GET_ALL_HOUSES_ERROR';
+  error: string;
+}
+export interface GOT_ALL_HOUSES {
   type: 'GOT_ALL_HOUSES';
   allHousesIds: List<string>;
   allHouses: Map<string, unknown>;
   regions: Set<string>;
-};
-type GET_HOUSE = { type: 'GET_HOUSE'; houseId: string };
-type GET_HOUSE_ERROR = {
+}
+interface GET_HOUSE {
+  type: 'GET_HOUSE';
+  houseId: string;
+}
+export interface GET_HOUSE_ERROR {
   type: 'GET_HOUSE_ERROR';
   houseId: string;
   error: string;
-};
+}
 interface GOT_HOUSE {
   type: 'GOT_HOUSE';
   houseId: string;
