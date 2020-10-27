@@ -19,6 +19,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install, lint, and test
       run: |
+        echo "DISABLE_NEW_JSX_TRANSFORM = true" > .env
         yarn install
         yarn lint
         yarn tsc --noEmit  --skipLibCheck 
