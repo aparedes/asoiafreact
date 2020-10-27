@@ -1,6 +1,6 @@
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { HouseItem } from './houseItem';
-import renderer from 'react-test-renderer';
 
 // coatOfArms: string,
 // error: ?string,
@@ -10,21 +10,20 @@ import renderer from 'react-test-renderer';
 // name: string,
 // words: string,
 
-function GetHouse() {}
 test('Displays a house', () => {
-  const component = renderer.create(
+  const component = render(
     <HouseItem
       houseId={'1'}
       name={'House Stark of Winterfell'}
       words={'Winter is Comming'}
       coatOfArms={'Dire wolf'}
-      getHouse={GetHouse}
+      getHouse={jest.fn()}
+      getting={false}
+      got
     />
   );
-  let houseItem = component.toJSON();
-  expect(houseItem).toMatchSnapshot();
 
-  houseItem.props.onClick();
-  houseItem = component.toJSON();
-  expect(houseItem).toMatchSnapshot();
+  expect(component).toMatchSnapshot();
+  fireEvent.click(component.getByTestId('house'));
+  expect(component).toMatchSnapshot();
 });

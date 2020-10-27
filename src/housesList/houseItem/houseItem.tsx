@@ -64,7 +64,7 @@ export class HouseItem extends Component<Props, State> {
   render() {
     const { error, getting } = this.props;
     return (
-      <div className={'house'} onClick={this.changeState}>
+      <div className={'house'} data-testid="house" onClick={this.changeState}>
         <div className={'houseName'}>{this.props.name}</div>
         {this.state.showFull
           ? getting
