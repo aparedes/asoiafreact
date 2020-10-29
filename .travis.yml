@@ -3,7 +3,10 @@ node_js:
   - "node"
 
 install:
+  - echo "DISABLE_NEW_JSX_TRANSFORM = true" > .env
   - yarn install
 
 script:
+  - yarn lint
+  - yarn tsc --noEmit  --skipLibCheck 
   - yarn test
