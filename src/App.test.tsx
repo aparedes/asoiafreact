@@ -1,8 +1,4 @@
-import { App } from './App';
-
-import React from 'react';
-import { render } from '@testing-library/react';
-
+export {};
 jest.mock('./regions/regions', () => () => null);
 jest.mock('./housesList/housesList', () => () => null);
 jest.mock('./searchHouse/searchHouse', () => () => null);

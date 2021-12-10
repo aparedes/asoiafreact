@@ -1,6 +1,4 @@
-import React from 'react';
-// import { SearchHouse } from './searchHouse';
-// import { render, screen } from '@testing-library/react';
+export {};
 
 test('Prints a list of houses', () => {
   // render(<SearchHouse setSearch={jest.fn()} />);

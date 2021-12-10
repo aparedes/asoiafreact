@@ -1,7 +1,4 @@
-// import { render } from '@testing-library/react';
-// import { Set } from 'immutable';
-import React from 'react';
-// import { Regions } from './regions';
+export {};
 
 // regions: Set<string>,
 // selectedRegion: string,

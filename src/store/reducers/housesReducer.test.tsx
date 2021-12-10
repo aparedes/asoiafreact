@@ -1,15 +1,8 @@
-import { List, Map, Set, is } from 'immutable';
+
 import { houseActions, houseReducer } from './housesReducer';
 
 describe('Test House Reducer', () => {
-  function expectIs(left: Map<string, unknown>, right: Map<string, unknown>) {
-    const comparison = is(left, right);
-    expect(comparison).toBe(true);
-    const commutative = is(right, left);
-    expect(commutative).toBe(true);
-  }
-
-  let map = { gettingAll: false, houses: [] };
+  const map = { gettingAll: false, houses: [] };
   // it('Returns Map from unknown action', () => {
   //   let action = { type: 'INIT_REDUX' };
   //   expectIs(reducer(map, action), Map());
