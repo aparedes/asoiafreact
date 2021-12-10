@@ -1,76 +1,92 @@
 /* @flow */
 
-import { Map, List, Set } from 'immutable';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface GET_ALL_HOUSES {
-  type: 'GET_ALL_HOUSES';
-}
-export interface GET_ALL_HOUSES_ERROR {
-  type: 'GET_ALL_HOUSES_ERROR';
-  error: string;
-}
-export interface GOT_ALL_HOUSES {
-  type: 'GOT_ALL_HOUSES';
-  allHousesIds: List<string>;
-  allHouses: Map<string, unknown>;
-  regions: Set<string>;
-}
-interface GET_HOUSE {
-  type: 'GET_HOUSE';
-  houseId: string;
-}
-export interface GET_HOUSE_ERROR {
-  type: 'GET_HOUSE_ERROR';
-  houseId: string;
-  error: string;
-}
-interface GOT_HOUSE {
-  type: 'GOT_HOUSE';
-  houseId: string;
-  house: Map<string, unknown>;
-}
+type House = {
+  id: string;
+  region: string;
+  name: string;
+  currentLord?: {
+    name: string;
+  };
+  coatOfArms?: string;
+  words?: string;
+  error?: string;
+  getting?: boolean;
+};
 
-export type HouseAction =
-  | GET_ALL_HOUSES
-  | GET_ALL_HOUSES_ERROR
-  | GOT_ALL_HOUSES
-  | GET_HOUSE_ERROR
-  | GOT_HOUSE
-  | GET_HOUSE;
+export type HouseState = {
+  gettingAll: boolean;
+  errorAll?: string;
+  housesIds?: string[];
+  houses: House[];
+  regions?: Readonly<string[]>;
+};
 
-export default function HouseReducers(
-  state: Map<string, unknown> = Map(),
-  action: HouseAction
-): Map<string, unknown> {
-  if (action) {
-    switch (action.type) {
-      // ALL HOUSES
-      case 'GET_ALL_HOUSES':
-        return state.setIn(['getting_all'], true);
-      case 'GET_ALL_HOUSES_ERROR':
-        return state
-          .removeIn(['getting_all'])
-          .setIn(['error_all'], action.error);
-      case 'GOT_ALL_HOUSES':
-        return state
-          .removeIn(['getting_all'])
-          .setIn(['houses'], action.allHouses)
-          .setIn(['housesIds'], action.allHousesIds)
-          .setIn(['regions'], action.regions);
-      // SINGLE HOUSE
-      case 'GET_HOUSE':
-        return state.setIn(['houses', action.houseId, 'getting'], true);
-      case 'GET_HOUSE_ERROR':
-        return state
-          .removeIn(['houses', action.houseId, 'getting'])
-          .setIn(['houses', action.houseId, 'error'], action.error);
-      case 'GOT_HOUSE':
-        return state
-          .mergeIn(['houses', action.houseId], action.house)
-          .removeIn(['houses', action.houseId, 'getting'])
-          .removeIn(['houses', action.houseId, 'error']);
-      default:
-    }
-  }
-  return state;
-}
+const { actions, reducer } = createSlice({
+  name: 'house',
+  initialState: {
+    gettingAll: false,
+    houses: [],
+    regions: [],
+    housesIds: [],
+  } as HouseState,
+  reducers: {
+    getAllHouses(state) {
+      state.gettingAll = true;
+    },
+    getAllHousesError(state, action) {
+      state.gettingAll = false;
+      state.errorAll = action.payload;
+    },
+    gotAllHouses(
+      state,
+      action: PayloadAction<{
+        allHouses: House[];
+        allHousesIds: string[];
+        regions: string[];
+      }>
+    ) {
+      state.gettingAll = false;
+      state.houses = action.payload.allHouses;
+      state.housesIds = action.payload.allHousesIds;
+      state.regions = action.payload.regions;
+    },
+    getHouse(state, action: PayloadAction<string>) {
+      const houseId = state.houses.findIndex(
+        (house) => house.id === action.payload
+      );
+      ((state.houses[houseId] as Record<string, unknown>) ?? {}).getting = true;
+    },
+    getHouseError(
+      state,
+      action: PayloadAction<{ houseId: string; error: string }>
+    ) {
+      const houseId = state.houses.findIndex(
+        (house) => house.id === action.payload.houseId
+      );
+      ((state.houses[houseId] as Record<string, unknown>) ?? {}).getting =
+        false;
+      ((state.houses[houseId] as Record<string, unknown>) ?? {}).error =
+        action.payload.error;
+    },
+    gotHouse(
+      state,
+      action: PayloadAction<{ houseId: string; house: Record<string, unknown> }>
+    ) {
+      const houseId = state.houses.findIndex(
+        (house) => house.id === action.payload.houseId
+      );
+      ((state.houses[houseId] as Record<string, unknown>) ?? {}).getting =
+        false;
+      ((state.houses[houseId] as Record<string, unknown>) ?? {}).error = null;
+      (state.houses[houseId] as Record<string, unknown>) = {
+        ...state.houses[houseId],
+        ...action.payload.house,
+      };
+    },
+  },
+});
+
+export const houseReducer = reducer;
+export const houseActions = actions;

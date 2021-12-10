@@ -1,9 +1,9 @@
 /* @flow */
 import './houseItem.css';
 import React, { Component, MouseEvent } from 'react';
-import { Map } from 'immutable';
 import { connect } from 'react-redux';
-import { ReduxState, Dispatch } from '../../store/constants/reduxTypes';
+import { Dispatch, ReduxState } from '../../store/constants/reduxTypes';
+import { houseActions } from '../../store/reducers/housesReducer';
 
 interface DTP {
   getHouse: () => void;
@@ -90,20 +90,23 @@ interface STP {
 }
 
 function mapStateToProps(state: ReduxState, { houseId }: ReduxProps): STP {
-  const house = state.houses.getIn(['houses', houseId], Map());
+  const house = state.houses.houses.find((house) => house.id === houseId);
   return {
-    coatOfArms: house.getIn(['coatOfArms'], ''),
-    error: house.getIn(['error'], null),
-    getting: house.getIn(['getting'], false),
-    got: house.has('coatOfArms'),
-    name: house.getIn(['name'], ''),
-    words: house.getIn(['words'], ''),
+    coatOfArms: house?.coatOfArms ?? '',
+    error: house?.error,
+    getting: house?.getting ?? false,
+    got: !!house?.coatOfArms,
+    name: house?.name ?? '',
+    words: house?.words ?? '',
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch, { houseId }: ReduxProps) {
   return {
-    getHouse: () => dispatch({ type: 'GET_HOUSE', houseId }),
+    getHouse: () => {
+      console.log(houseId);
+      dispatch(houseActions.getHouse(houseId));
+    },
   };
 }
 

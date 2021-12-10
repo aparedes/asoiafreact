@@ -1,4 +1,4 @@
-import AppReducer, { AppEnum } from './app';
+import { appReducer, appActions } from './app';
 
 describe('Test App Reducer', () => {
   // it('Returns {}', () => {
@@ -11,17 +11,14 @@ describe('Test App Reducer', () => {
   // });
 
   it("Return { search: 'Stark' } from {}", () => {
-    expect(
-      AppReducer({}, { type: AppEnum.SET_SEARCH, search: 'Stark' })
-    ).toEqual({ search: 'Stark' });
+    expect(appReducer({}, appActions.setSearch('Stark'))).toEqual({
+      search: 'Stark',
+    });
   });
 
   it("Returns { search: 'Targaryan' } from { search: 'Stark' }", () => {
     expect(
-      AppReducer(
-        { search: 'Stark' },
-        { type: AppEnum.SET_SEARCH, search: 'Targaryan' }
-      )
+      appReducer({ search: 'Stark' }, appActions.setSearch('Targaryan'))
     ).toEqual({
       search: 'Targaryan',
     });
@@ -29,21 +26,16 @@ describe('Test App Reducer', () => {
 
   it("Retruns { region: 'The North' } from { search: 'Stark' }", () => {
     expect(
-      AppReducer(
-        { search: 'Stark' },
-        { type: AppEnum.SET_REGION, region: 'The North' }
-      )
+      appReducer({ search: 'Stark' }, appActions.setRegion('The North'))
     ).toEqual({
+      search: 'Stark',
       region: 'The North',
     });
   });
 
   it("Retruns { region: 'Dorne' } from { region: 'The North' }", () => {
     expect(
-      AppReducer(
-        { region: 'The North' },
-        { type: AppEnum.SET_REGION, region: 'Dorne' }
-      )
+      appReducer({ region: 'The North' }, appActions.setRegion('Dorne'))
     ).toEqual({
       region: 'Dorne',
     });

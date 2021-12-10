@@ -1,9 +1,5 @@
 import { List, Map, Set, is } from 'immutable';
-import reducer, {
-  GOT_ALL_HOUSES,
-  GET_ALL_HOUSES_ERROR,
-  GET_ALL_HOUSES,
-} from './housesReducer';
+import { houseActions, houseReducer } from './housesReducer';
 
 describe('Test House Reducer', () => {
   function expectIs(left: Map<string, unknown>, right: Map<string, unknown>) {
@@ -13,45 +9,44 @@ describe('Test House Reducer', () => {
     expect(commutative).toBe(true);
   }
 
-
-  let map: Map<string, unknown> = Map();
+  let map = { gettingAll: false, houses: [] };
   // it('Returns Map from unknown action', () => {
   //   let action = { type: 'INIT_REDUX' };
   //   expectIs(reducer(map, action), Map());
   // });
 
   it('GET_ALL_HOUSES', () => {
-    let action = { type: 'GET_ALL_HOUSES' } as GET_ALL_HOUSES;
-    expectIs(reducer(map, action), Map({ getting_all: true }));
+    expect(houseReducer(undefined, houseActions.getAllHouses())).toEqual({
+      gettingAll: true,
+      houses: [],
+      housesIds: [],
+      regions: [],
+    });
   });
 
   it('GET_ALL_HOUSES_ERROR after GET_ALL_HOUSES', () => {
-    let action = {
-      type: 'GET_ALL_HOUSES_ERROR',
-      error: 'Fetch Error',
-    } as GET_ALL_HOUSES_ERROR;
-    map = Map({ getting_all: true });
-    expectIs(reducer(map, action), Map({ error_all: 'Fetch Error' }));
+    expect(
+      houseReducer(
+        { gettingAll: true, houses: [] },
+        houseActions.getAllHousesError('Fetch Error')
+      )
+    ).toEqual({
+      gettingAll: false,
+      houses: [],
+      errorAll: 'Fetch Error',
+    });
   });
 
   it('GET_ALL_HOUSES after GET_ALL_HOUSES', () => {
     let action = {
-      type: 'GOT_ALL_HOUSES',
-      allHouses: Map({
-        '1': Map({ name: 'House Stark of Winterfell' }),
-      }),
-      allHousesIds: List(['1']),
-      regions: Set(['The North']),
-    } as GOT_ALL_HOUSES;
-    expectIs(
-      reducer(map, action),
-      Map({
-        houses: Map({
-          '1': Map({ name: 'House Stark of Winterfell' }),
-        }),
-        housesIds: List(['1']),
-        regions: Set(['The North']),
-      })
-    );
+      allHouses: [
+        { id: '1', name: 'House Stark of Winterfell', region: 'The North' },
+      ],
+      allHousesIds: ['1'],
+      regions: ['The North'],
+    };
+    expect(
+      houseReducer(map, houseActions.gotAllHouses(action))
+    ).toMatchSnapshot();
   });
 });

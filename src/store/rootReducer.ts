@@ -1,12 +1,9 @@
-/* @flow */
-import AppReducer from './reducers/app';
-import HousesReducer from './reducers/housesReducer';
-import { combineReducers } from 'redux';
-import {  ReduxState } from './constants/reduxTypes';
+import { appReducer } from './reducers/app';
+import { houseReducer } from './reducers/housesReducer';
 
-const rootReducer = combineReducers<ReduxState>({
-  app: AppReducer,
-  houses: HousesReducer,
-});
+const rootReducer = {
+  app: appReducer,
+  houses: houseReducer,
+};
 
 export default rootReducer;

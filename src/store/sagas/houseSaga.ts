@@ -1,5 +1,3 @@
-/* @flow */
-import { Map, Set } from 'immutable';
 import { SagaIterator } from 'redux-saga';
 import {
   call,
@@ -8,6 +6,7 @@ import {
   takeEvery,
   takeLatest,
 } from 'redux-saga/effects';
+import { houseActions } from '../reducers/housesReducer';
 
 interface AllHousesType {
   data: {
@@ -55,35 +54,46 @@ function* getAllHouses(_action: GetAllHousesAction): SagaIterator<void> {
       `${EndPoint}?query={allHouses{totalCount houses{id name region}}}`
     );
     if (houses) {
-      let allHouses = Map<string, Map<string, string>>();
-      let regions: Set<string> = Set();
-      houses.data.allHouses.houses.forEach((house) => {
-        allHouses = allHouses.set(house.id, Map(house));
-        regions = regions.add(house.region);
+      const allHouses = houses.data.allHouses.houses;
+      const allHousesIds = allHouses.map((house) => house.id);
+      let regions: string[] = [];
+      allHouses.forEach((house) => {
+        if (!regions.includes(house.region)) {
+          regions.push(house.region);
+        }
       });
-      regions = regions.sort().toSet();
-      const allHousesIds = allHouses
-        .sortBy((house) => house?.getIn(['name'], '') ?? '')
-        .keySeq()
-        .toList();
-      yield put({ type: 'GOT_ALL_HOUSES', allHouses, allHousesIds, regions });
+
+      yield put(
+        houseActions.gotAllHouses({
+          allHouses: allHouses.sort((houseA, houseB) =>
+            houseA.name.localeCompare(houseB.name)
+          ),
+          allHousesIds,
+          regions: regions.sort(),
+        })
+      );
     } else {
       yield put({ type: 'NO HOUSES' });
     }
   } catch (e) {
-    console.error('GET ALL HOUSES', e, e.message, e.stack);
-    yield put({ type: 'GET_ALL_HOUSES_ERROR', error: e.message });
+    console.error(
+      'GET ALL HOUSES',
+      e,
+      (e as Error).message,
+      (e as Error).stack
+    );
+    yield put(houseActions.getAllHousesError({ error: (e as Error).message }));
   }
 }
 
 interface GetHouseAction {
   type: 'GET_HOUSE';
-  houseId: string;
+  payload: string;
 }
 
-function* getHouse({ houseId }: GetHouseAction): SagaIterator<void> {
+function* getHouse({ payload }: GetHouseAction): SagaIterator<void> {
   try {
-    const url = `${EndPoint}?query={house(id:"${houseId}"){name currentLord{name} region coatOfArms words}}`;
+    const url = `${EndPoint}?query={house(id:"${payload}"){name currentLord{name} region coatOfArms words}}`;
     const houseResponse: HouseType | null = yield call(fetchData, url);
     if (houseResponse) {
       const {
@@ -93,19 +103,19 @@ function* getHouse({ houseId }: GetHouseAction): SagaIterator<void> {
       if (house.currentLord) {
         currentLord = house.currentLord.name;
       }
-      const immutableHouse = Map(house)
-        .remove('currentLord')
-        .set('currentLord', currentLord);
-      yield put({ type: 'GOT_HOUSE', houseId, house: immutableHouse });
+      console.warn({ ...house, currentLord });
+      yield put(
+        houseActions.gotHouse({ houseId: payload, house: { ...house, currentLord } })
+      );
       console.log(JSON.stringify(house, null, '\t'));
     }
   } catch (e) {
-    yield put({ type: 'GET_HOUSE_ERROR', houseId, error: e.message });
+    yield put(houseActions.getHouseError({ houseId: payload, error: 'error' }));
   }
 }
 export default function HouseSaga(): ForkEffect<never>[] {
   return [
-    takeLatest('GET_ALL_HOUSES', getAllHouses),
-    takeEvery('GET_HOUSE', getHouse),
+    takeLatest('house/getAllHouses', getAllHouses),
+    takeEvery('house/getHouse', getHouse),
   ];
 }
