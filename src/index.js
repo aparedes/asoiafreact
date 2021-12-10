@@ -4,9 +4,8 @@ import App from './App';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import configureStore from './store/configureStore';
+import store from './store/configureStore';
 
-const store = configureStore({});
 const root = document.getElementById('root');
 
 if (root) {

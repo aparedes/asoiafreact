@@ -7,16 +7,15 @@ import HousesList from './housesList/housesList';
 
 import SearchHouse from './searchHouse/searchHouse';
 import Regions from './regions/regions';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Dispatch } from './store/constants/reduxTypes';
+import { houseActions } from './store/reducers/housesReducer';
 
-type Props = DTP;
-
-export function App(props: Props) {
-  const { getAllHouses } = props;
+export function App() {
+  const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
-    getAllHouses();
-  }, [getAllHouses]);
+    dispatch(houseActions.getAllHouses());
+  }, [dispatch]);
   return (
     <div className={'App'}>
       <SearchHouse />
@@ -26,11 +25,4 @@ export function App(props: Props) {
   );
 }
 
-interface DTP {
-  getAllHouses: () => void;
-}
-const mapDistachToProps = (dispatch: Dispatch): DTP => ({
-  getAllHouses: () => dispatch({ type: 'GET_ALL_HOUSES' }),
-});
-
-export default connect(null, mapDistachToProps)(App);
+export default App;

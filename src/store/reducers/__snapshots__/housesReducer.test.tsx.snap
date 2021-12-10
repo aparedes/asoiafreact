@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test House Reducer GET_ALL_HOUSES after GET_ALL_HOUSES 1`] = `
+Object {
+  "gettingAll": false,
+  "houses": Array [
+    Object {
+      "id": "1",
+      "name": "House Stark of Winterfell",
+      "region": "The North",
+    },
+  ],
+  "housesIds": Array [
+    "1",
+  ],
+  "regions": Array [
+    "The North",
+  ],
+}
+`;

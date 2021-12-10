@@ -1,18 +1,4 @@
-export enum AppEnum {
-  SET_SEARCH = 'SET_SEARCH',
-  SET_REGION = 'SET_REGION',
-}
-interface SET_SEARCH {
-  type: AppEnum.SET_SEARCH;
-  search: string;
-}
-
-interface SET_REGION {
-  type: AppEnum.SET_REGION;
-  region: string;
-}
-
-export type Action = SET_REGION | SET_SEARCH;
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface AppState {
   search?: string;
@@ -23,16 +9,17 @@ function initState(): AppState {
   return {} as AppState;
 }
 
-export default function AppReducer(
-  state: AppState = initState(),
-  action: Action
-): AppState {
-  switch (action.type) {
-    case AppEnum.SET_SEARCH:
-      return { search: action.search };
-    case AppEnum.SET_REGION:
-      return { region: action.region };
-    default:
-      return state;
-  }
-}
+const appSlice = createSlice({
+  name: 'app',
+  initialState: initState(),
+  reducers: {
+    setSearch: (state, action: PayloadAction<string>) => {
+      state.search = action.payload;
+    },
+    setRegion: (state, action: PayloadAction<string>) => {
+      state.region = action.payload;
+    },
+  },
+});
+
+export const { actions: appActions, reducer: appReducer } = appSlice;
