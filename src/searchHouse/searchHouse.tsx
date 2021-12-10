@@ -8,7 +8,6 @@ export function SearchHouse() {
   const onChange = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
       const input = evt.target;
-      console.log(input.value);
       dispatch(appActions.setSearch(input.value));
     },
     [dispatch]

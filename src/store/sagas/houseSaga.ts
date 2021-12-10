@@ -103,11 +103,9 @@ function* getHouse({ payload }: GetHouseAction): SagaIterator<void> {
       if (house.currentLord) {
         currentLord = house.currentLord.name;
       }
-      console.warn({ ...house, currentLord });
       yield put(
         houseActions.gotHouse({ houseId: payload, house: { ...house, currentLord } })
       );
-      console.log(JSON.stringify(house, null, '\t'));
     }
   } catch (e) {
     yield put(houseActions.getHouseError({ houseId: payload, error: 'error' }));

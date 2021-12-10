@@ -104,7 +104,6 @@ function mapStateToProps(state: ReduxState, { houseId }: ReduxProps): STP {
 function mapDispatchToProps(dispatch: Dispatch, { houseId }: ReduxProps) {
   return {
     getHouse: () => {
-      console.log(houseId);
       dispatch(houseActions.getHouse(houseId));
     },
   };
