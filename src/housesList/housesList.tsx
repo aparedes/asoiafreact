@@ -1,9 +1,8 @@
 import './houseList.css';
 import React, { ReactElement } from 'react';
 import HouseItem from './houseItem/houseItem';
-import {  useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { ReduxState } from '../store/constants/reduxTypes';
-
 
 function mapHouses(house?: string): ReactElement<void> | null {
   if (!house) {
@@ -13,7 +12,7 @@ function mapHouses(house?: string): ReactElement<void> | null {
 }
 
 export function HousesList() {
-  const { allHouses, error, getting } = useSelector(mapStateToProps);
+  const { allHouses, error, getting } = useSelector(mapStateToProps, shallowEqual);
 
   return (
     <div className={'houseList'}>
@@ -39,7 +38,6 @@ function mapStateToProps(state: ReduxState) {
   } else {
     allHouses = [...(state.houses.housesIds ?? [])];
   }
-  console.warn(allHouses)
   return {
     allHouses,
     error: state.houses.errorAll,
