@@ -5,13 +5,13 @@ export interface AppState {
   region?: string;
 }
 
-function initState(): AppState {
+export function initialAppState(): AppState {
   return {} as AppState;
 }
 
 const appSlice = createSlice({
   name: 'app',
-  initialState: initState(),
+  initialState: initialAppState(),
   reducers: {
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;

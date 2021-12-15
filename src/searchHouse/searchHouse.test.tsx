@@ -1,7 +1,8 @@
-export {};
+import { render } from '../../tests/test-utils';
+import SearchHouse from './searchHouse';
 
-test('Prints a list of houses', () => {
-  // render(<SearchHouse setSearch={jest.fn()} />);
+test('Prints a list o<f houses', () => {
+  const { container } = render(<SearchHouse />);
 
-  expect('toupdate').toMatchSnapshot();
+  expect(container).toMatchSnapshot();
 });

@@ -23,14 +23,18 @@ export type HouseState = {
   regions?: Readonly<string[]>;
 };
 
-const { actions, reducer } = createSlice({
-  name: 'house',
-  initialState: {
+export function initialHouseState(): HouseState {
+  return {
     gettingAll: false,
     houses: [],
     regions: [],
     housesIds: [],
-  } as HouseState,
+  };
+}
+
+const { actions, reducer } = createSlice({
+  name: 'house',
+  initialState: initialHouseState(),
   reducers: {
     getAllHouses(state) {
       state.gettingAll = true;

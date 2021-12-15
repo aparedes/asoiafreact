@@ -1,3 +1,6 @@
+import { render } from '../../tests/test-utils';
+import Regions from './regions';
+
 export {};
 
 // regions: Set<string>,
@@ -6,15 +9,15 @@ export {};
 
 it('Displays the regions', () => {
   // test('Region snapshot', () => {
-    // const r = render(
-    //   <Regions
-    //     regions={Set(['', 'The North', 'Dorne', 'North of The Wall'])}
-    //     selectedRegion={''}
-    //     setRegion={jest.fn()}
-    //   />
-    // );
-
-    expect('toupdate').toMatchSnapshot();
+  // const r = render(
+  //   <Regions
+  //     regions={Set(['', 'The North', 'Dorne', 'North of The Wall'])}
+  //     selectedRegion={''}
+  //     setRegion={jest.fn()}
+  //   />
+  // );
+  const { container } = render(<Regions />);
+  expect(container).toMatchSnapshot();
   // });
 
   //

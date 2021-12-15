@@ -1,3 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Prints a list of houses 1`] = `"toupdate"`;
+exports[`Prints a list o<f houses 1`] = `
+<div>
+  <input
+    class="search"
+    placeholder="Search house"
+  />
+</div>
+`;
